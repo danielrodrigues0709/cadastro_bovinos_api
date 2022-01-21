@@ -1,0 +1,11 @@
+{
+  "name": "cadastro_bovinos_api",
+  "version": "1.0.0",
+  "description": "Backend cadastro de bovinos",
+  "main": "index.js",
+  "scripts": {
+    "test": "test"
+  },
+  "author": "",
+  "license": "ISC"
+}
