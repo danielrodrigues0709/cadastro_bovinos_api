@@ -2,6 +2,7 @@ const express = require('express');
 const http = require('http');
 
 const { MSGS } = require('./msgs');
+const medicamentosRouter = require('./src/routes/medicamentosRoutes');
 const { Tabelas } = require('./src/tables');
 
 const PORT = process.env.PORT || 3333;
@@ -35,3 +36,6 @@ app.use(express.json());
 //Cria tabelas
 Tabelas.createMedicamentosTable();
 // Tabelas.deleteMedicamentosTable();
+
+// Rotas
+app.use('/medicamentos', medicamentosRouter);

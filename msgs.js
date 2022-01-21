@@ -10,5 +10,12 @@ module.exports.MSGS = {
     // Tabelas
     tabelaCriada: 'Tabela criada',
     tabelaDeletada: 'Erro ao criar tabela',
-    erroTabela: 'Tabela deletada'
+    erroTabela: 'Tabela deletada',
+    // Responses
+    erroRequisicao: 'Erro ao efetuar requisição',
+    faltaParametros: 'Parametros não informados',
+    registroCriado: 'Registro criado, id',
+    registroAtualizado: 'Registro atualizado, id',
+    registroDeletado: 'Registro deletado, id',
+    registroNaoEncontrado: 'Registro não encontrado',
 }
