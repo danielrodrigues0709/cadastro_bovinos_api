@@ -5,7 +5,7 @@ const db =  openConnection();
 
 class Tabelas {
     createMedicamentosTable() {
-        db.run(`CREATE TABLE IF NOT EXISTS medicamentos (id INTEGER PRIMARY KEY AUTOINCREMENT,medicamento STRING)`, (err) => {
+        db.query(`CREATE TABLE IF NOT EXISTS medicamentos (id SERIAL PRIMARY KEY,medicamento VARCHAR(50))`, (err) => {
             if(err) {
                 console.log(MSGS.erroTabela, err);
             }
@@ -14,20 +14,20 @@ class Tabelas {
             }
         })
 
-        db.close(() => {
+        db.end(() => {
             console.log(MSGS.fechaConexao);
         });
     }
 
     deleteMedicamentosTable() {
-        db.run(`DROP TABLE medicamentos`, (err) => {  
+        db.query(`DROP TABLE medicamentos`, (err) => {  
             if(err) {
                 console.log(err);
             }
             else console.log(MSGS.tabelaDeletada);
         });
 
-        db.close(() => {
+        db.end(() => {
             console.log(MSGS.conexaoFechada);
         });
     }

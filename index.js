@@ -1,28 +1,11 @@
 const express = require('express');
-const http = require('http');
 
 const { MSGS } = require('./msgs');
 const medicamentosRouter = require('./src/routes/medicamentosRoutes');
 const { Tabelas } = require('./src/tables');
 
-const PORT = process.env.PORT || 3333;
-
 const app = express();
-const httpServer = http.createServer(app);
-
-// Inicia servidor
-module.exports.startServer = () => {
-  httpServer.listen(PORT, () => console.log(`${MSGS.servidor} ${PORT}`));
-}
-
-// Fecha servidor
-module.exports.shutDownServer = () => {
-    httpServer.close(err => {
-      if(err)
-          console.log(err);
-      else console.log(MSGS.servidorDesligado);
-  });
-}
+process.env['NODE_TLS_REJECT_UNAUTHORIZED'] = 0;
 
 // Rota de teste
 app.get('/', (req, res) => {
