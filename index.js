@@ -1,17 +1,23 @@
 const express = require('express');
-
-const { MSGS } = require('./msgs');
-const medicamentosRouter = require('./src/routes/medicamentosRoutes');
-const { createMedicamentosTable, deleteMedicamentosTable } = require('./src/tables');
-
 const app = express();
-const PORT = process.env.PORT;
+const morgan = require('morgan');
+const bodyParser = require('body-parser');
+
+const medicamentosRoutes = require('./src/routes/medicamentosRoutes');
+const productRoutes = require('./src/routes/product-route');
+const { createMedicamentosTable, deleteMedicamentosTable, createProdutosTable, deleteProdutosTable } = require('./src/tables');
+
+app.use(morgan('dev'));
+app.use(bodyParser.urlencoded({ extended: false }));  // apenas dados simples
+app.use(bodyParser.json()); // json de entrada no body
+
 process.env['NODE_TLS_REJECT_UNAUTHORIZED'] = 0;
 
-// Rota de teste
-app.get('/', (req, res) => {
-    res.send(`${MSGS.servidor} ${PORT}`);
-})
+//Cria tabelas
+createProdutosTable();
+// deleteProdutosTable();
+createMedicamentosTable();
+// deleteMedicamentosTable();
 
 app.use((req, res, next) => {
     res.header('Access-Control-Allow-Origin', '*');
@@ -27,9 +33,22 @@ app.use((req, res, next) => {
     next();
 });
 
-//Cria tabelas
-createMedicamentosTable();
-// deleteMedicamentosTable();
+app.use('/medicamentos', medicamentosRoutes);
+app.use('/products', productRoutes);
 
-// Rotas
-app.use('/medicamentos', medicamentosRouter);
+app.use((req, res, next) => {
+    const erro = new Error('Não encontrado');
+    erro.status = 404;
+    next(erro);
+});
+
+app.use((error, req, res, next) => {
+    res.status(error.status || 500);
+    return res.send({
+        erro: {
+            mensagem: error.message
+        }
+    });
+});
+
+module.exports = app;
