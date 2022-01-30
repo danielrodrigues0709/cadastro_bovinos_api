@@ -20,20 +20,3 @@ module.exports.openConnection = () => {
 
     return db;
 }
-
-module.exports.dbQuery = (query, params) => {
-    let db = this.openConnection();
-
-    return new Promise((resolve, reject) => {
-        db.query(query, params, (err, rows) => {
-            if(err)
-                reject(err);
-            else
-                resolve(rows);
-        })
-    })
-    .finally(() => {
-        db.end();
-        console.log(MSGS.fechaConexao);
-    })
-}

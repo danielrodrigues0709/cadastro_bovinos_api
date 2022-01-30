@@ -1,24 +1,37 @@
 const express = require('express');
 
+const { openConnection } = require('./db');
 const { MSGS } = require('./msgs');
 const medicamentosRouter = require('./src/routes/medicamentosRoutes');
-const { Tabelas } = require('./src/tables');
+const { createMedicamentosTable, deleteMedicamentosTable } = require('./src/tables');
 
-const app = express();
-process.env['NODE_TLS_REJECT_UNAUTHORIZED'] = 0;
+const router = express.Router();
+const app = openConnection();
 
 // Rota de teste
-app.get('/', (req, res) => {
+router.get('/', (req, res) => {
     res.send(`${MSGS.servidor} ${PORT}`);
 })
 
-// Para uso de rotas
-app.use(express.urlencoded({ extended: true }));
-app.use(express.json());
-
 //Cria tabelas
-Tabelas.createMedicamentosTable();
-// Tabelas.deleteMedicamentosTable();
+createMedicamentosTable();
+// deleteMedicamentosTable();
 
 // Rotas
-app.use('/medicamentos', medicamentosRouter);
+router.use('/medicamentos', medicamentosRouter);
+
+
+module.exports.dbQuery = (query, params) => {
+    return new Promise((resolve, reject) => {
+        app.query(query, params, (err, rows) => {
+            if(err)
+                reject(err);
+            else
+                resolve(rows);
+        })
+    })
+    .finally(() => {
+        app.end();
+        console.log(MSGS.fechaConexao);
+    })
+}
