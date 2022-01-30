@@ -1,37 +1,34 @@
 const express = require('express');
 
-const { openConnection } = require('./db');
 const { MSGS } = require('./msgs');
 const medicamentosRouter = require('./src/routes/medicamentosRoutes');
 const { createMedicamentosTable, deleteMedicamentosTable } = require('./src/tables');
 
-const router = express.Router();
-const app = openConnection();
+const app = express();
+const PORT = process.env.PORT;
 
 // Rota de teste
-router.get('/', (req, res) => {
+app.get('/', (req, res) => {
     res.send(`${MSGS.servidor} ${PORT}`);
 })
+
+app.use((req, res, next) => {
+    res.header('Access-Control-Allow-Origin', '*');
+    res.header(
+        'Access-Control-Allow-Header',
+        'Origin, X-Requested-With, Content-Type, Accept, Authorization'
+    );
+
+    if (req.method === 'OPTIONS') {
+        res.header('Access-Control-Allow-Methods', 'PUT, POST, PATCH, DELETE, GET');
+        return res.status(200).send({});
+    }
+    next();
+});
 
 //Cria tabelas
 createMedicamentosTable();
 // deleteMedicamentosTable();
 
 // Rotas
-router.use('/medicamentos', medicamentosRouter);
-
-
-module.exports.dbQuery = (query, params) => {
-    return new Promise((resolve, reject) => {
-        app.query(query, params, (err, rows) => {
-            if(err)
-                reject(err);
-            else
-                resolve(rows);
-        })
-    })
-    .finally(() => {
-        app.end();
-        console.log(MSGS.fechaConexao);
-    })
-}
+app.use('/medicamentos', medicamentosRouter);
