@@ -1,4 +1,4 @@
-const { dbQuery } = require("../../index");
+const { dbQuery } = require("../../db");
 const { MSGS } = require("../../msgs");
 
 module.exports.listMedicamentos = async () => {

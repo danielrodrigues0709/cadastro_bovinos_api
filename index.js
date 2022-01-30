@@ -6,6 +6,7 @@ const { createMedicamentosTable, deleteMedicamentosTable } = require('./src/tabl
 
 const app = express();
 const PORT = process.env.PORT;
+process.env['NODE_TLS_REJECT_UNAUTHORIZED'] = 0;
 
 // Rota de teste
 app.get('/', (req, res) => {
