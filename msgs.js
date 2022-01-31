@@ -14,7 +14,7 @@ module.exports.MSGS = {
     // Responses
     erroRequisicao: 'Erro ao efetuar requisição',
     faltaParametros: 'Parametros não informados',
-    registroCriado: 'Registro criado, id',
+    registroCriado: 'Registro criado',
     registroAtualizado: 'Registro atualizado, id',
     registroDeletado: 'Registro deletado, id',
     registroNaoEncontrado: 'Registro não encontrado',
