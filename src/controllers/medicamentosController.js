@@ -4,49 +4,78 @@ const { MSGS } = require("../../msgs");
 module.exports.listMedicamentos = (req, res, next) => {
     listMedicamentos()
         .then(medicamentos => {
-            res.json(medicamentos);
+            res.status(200).json(medicamentos);
             next();
         })
-        .catch(err => console.log(err, MSGS.erroServidor));
+        .catch(() => {
+            res.status(500).json({
+                message: MSGS.erroServidor
+            });
+            console.log(err)
+        });
 }
 
 module.exports.insertMedicamento = (req, res, next) => {
     const body = req.body;
     insertMedicamento(body.medicamento)
         .then(response => {
-            res.json({response});
+            res.status(201).json({
+                message: response
+            });
             next();
         })
-        .catch(err => console.log(err, MSGS.erroServidor));
+        .catch(() => {
+            res.status(500).json({
+                message: MSGS.erroServidor
+            });
+            console.log(err)
+        });
 }
 
 module.exports.selectMedicamento = (req, res, next) => {
     const id = Number(req.params.id);
     selectMedicamento(id)
-        .then(response => {
-            res.json({response});
+        .then(medicamento => {
+            res.status(200).json(medicamento);
             next();
         })
-        .catch(err => console.log(err, MSGS.erroServidor));
+        .catch(() => {
+            res.status(500).json({
+                message: MSGS.erroServidor
+            });
+            console.log(err)
+        });
 }
 
 module.exports.deleteMedicamento = (req, res, next) => {
     const id = Number(req.params.id);
     deleteMedicamento(id)
         .then(response => {
-            res.json({response});
+            res.status(200).json({
+                message: response
+            });
             next();
         })
-        .catch(err => console.log(err, MSGS.erroServidor));
+        .catch(() => {
+            res.status(500).json({
+                message: MSGS.erroServidor
+            });
+            console.log(err)
+        });
 }
 
 module.exports.updateMedicamento = (req, res, next) => {
     const body = req.body;
     const id = Number(req.params.id);
     updateMedicamento(body.medicamento, id)
-        .then(response => {
-            res.json({response});
+        .then(medicamento => {
+            res.json({medicamento});
             next();
         })
-        .catch(err => console.log(err, MSGS.erroServidor));
+        .catch(() => {
+            res.status(500).json({
+                message: MSGS.erroServidor
+            });
+            console.log(err)
+        });
 }

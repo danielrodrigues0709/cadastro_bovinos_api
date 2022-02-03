@@ -1,4 +1,5 @@
 const { Pool } = require('pg');
+const { MSGS } = require('./msgs');
 
 module.exports.openConnection = () => {
     const db = new Pool({
@@ -10,18 +11,22 @@ module.exports.openConnection = () => {
         ssl: true
     });
 
-return db;
+    return db;
 }
 
-exports.dbQuery = (query, params=[]) => {
-    const db = this.openConnection();
+module.exports.dbQuery = (query, params) => {
+    let db = this.openConnection();
+
     return new Promise((resolve, reject) => {
-        db.query(query, params, (error, result, fields) => {
-            if (error) {
-                reject(error);
-            } else {
-                resolve(result)
-            }
-        });
+        db.query(query, params, (err, rows) => {
+            if(err)
+                reject(err);
+            else
+                resolve(rows);
+        })
+    })
+    .finally(() => {
+        db.end();
+        console.log(MSGS.fechaConexao);
     })
 }
