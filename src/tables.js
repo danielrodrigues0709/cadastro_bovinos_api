@@ -3,27 +3,29 @@ const { MSGS } = require("../msgs");
 
 const db =  openConnection();
 
-module.exports.createMedicamentosTable = async () => {
-    await db.query(`CREATE TABLE IF NOT EXISTS medicamentos (id SERIAL PRIMARY KEY,medicamento VARCHAR(50))`, (err) => {
+module.exports.createUsuariosTable = async () => {
+    await db.query(`CREATE TABLE IF NOT EXISTS usuarios (id SERIAL PRIMARY KEY,usuario VARCHAR(50),email VARCHAR(100),senha VARCHAR(100))`, (err) => {
         if(err) {
-            console.log(MSGS.erroTabela, 'medicamentos', err);
+            console.log(MSGS.erroTabela, 'usuarios', err);
         }
-        else console.log(MSGS.tabelaCriada);
+        else console.log(MSGS.tabelaCriada, 'usuarios');
 
         db.end(() => {
             console.log(MSGS.fechaConexao);
         });
     })
 }
-module.exports.deleteMedicamentosTable = async () => {
-    await db.query(`DROP TABLE medicamentos`, (err) => {  
+
+module.exports.createMedicamentosTable = async (nome_schema) => {
+    const schema = nome_schema ? nome_schema+'.': '';
+    await db.query(`CREATE TABLE IF NOT EXISTS ${schema}medicamentos (id SERIAL PRIMARY KEY,medicamento VARCHAR(50))`, (err) => {
         if(err) {
-            console.log(err);
+            console.log(MSGS.erroTabela, 'medicamentos', err);
         }
-        else console.log(MSGS.tabelaDeletada);
+        else console.log(MSGS.tabelaCriada, 'medicamentos');
 
         db.end(() => {
-            console.log(MSGS.conexaoFechada);
+            console.log(MSGS.fechaConexao);
         });
-    });
+    })
 }
