@@ -1,6 +1,10 @@
+const bcrypt = require("bcrypt");
+
 const { listUsuarios, insertUsuario, deleteUsuario, updateUsuario, selectUsuarioById, selectUsuarioByUsername } = require("../models/usuariosModel");
 const { MSGS } = require("../../msgs");
-const bcrypt = require("bcrypt");
+const { createSchemaSql } = require("../schemas");
+const { snakeCase } = require("../../utils");
+const { createMedicamentosTable } = require("../tables");
 
 module.exports.listUsuarios = (req, res, next) => {
     listUsuarios()
@@ -9,8 +13,8 @@ module.exports.listUsuarios = (req, res, next) => {
             next();
         })
         .catch(err => {
-            res.status(500).json({
-                message: MSGS.erroServidor
+            res.status(422).json({
+                message: MSGS.erroRequisicao
             });
             console.log(err)
         });
@@ -20,7 +24,7 @@ module.exports.insertUsuario = (req, res, next) => {
     const body = req.body;
     selectUsuarioByUsername(body.usuario).then(response => {
         if(response.rowCount > 0) {
-            return res.status(500).json({
+            return res.status(422).json({
                 message: MSGS.usuarioJaExistente
             });
         }
@@ -28,23 +32,51 @@ module.exports.insertUsuario = (req, res, next) => {
             bcrypt.hash(req.body.senha, 10, (err, hash) => {
                 if(err) {
                     console.log(err);
-                    return res.status(500).json({
+                    return res.status(422).json({
                         message: MSGS.erroHash
                     });
                 }
                 else {
                     insertUsuario(body.usuario, body.email, hash)
-                        .then(response => {
+                        .then(async response => {
                             res.status(201).json({
                                 message: response
                             });
-                            next();
+                            await next();
+                        })
+                        .then(async () => {
+                            await createSchemaSql(snakeCase(body.usuario))
+                                .then(async response => {
+                                    console.log(response);
+                                    res.status(200);
+                                    await next();
+                                })
+                                .then(async () => {
+                                    await createMedicamentosTable(snakeCase(body.usuario))
+                                        .then(response => {
+                                            console.log(response);
+                                            res.status(200);
+                                            next();
+                                        })
+                                        .catch(err => {
+                                            console.log(err);
+                                            return res.status(422).json({
+                                                message: MSGS.erroTabela
+                                            });
+                                        });
+                                })
+                                .catch(err => {
+                                    console.log(err);
+                                    return res.status(422).json({
+                                        message: MSGS.erroSchema
+                                    });
+                                });
                         })
                         .catch(err => {
-                            res.status(500).json({
-                                message: MSGS.erroServidor
-                            });
                             console.log(err);
+                            return res.status(422).json({
+                                message: MSGS.erroTabela
+                            });
                         });
                 }
             });
@@ -60,8 +92,8 @@ module.exports.selectUsuarioById = (req, res, next) => {
             next();
         })
         .catch(err => {
-            res.status(500).json({
-                message: MSGS.erroServidor
+            res.status(422).json({
+                message: MSGS.erroRequisicao
             });
             console.log(err);
         });
@@ -75,8 +107,8 @@ module.exports.selectUsuarioByUsername = (req, res, next) => {
             next();
         })
         .catch(err => {
-            res.status(500).json({
-                message: MSGS.erroServidor
+            res.status(422).json({
+                message: MSGS.erroRequisicao
             });
             console.log(err);
         });
@@ -92,8 +124,8 @@ module.exports.deleteUsuario = (req, res, next) => {
             next();
         })
         .catch(err => {
-            res.status(500).json({
-                message: MSGS.erroServidor
+            res.status(422).json({
+                message: MSGS.erroRequisicao
             });
             console.log(err);
         });
@@ -105,7 +137,7 @@ module.exports.updateUsuario = (req, res, next) => {
     bcrypt.hash(req.body.senha, 10, (err, hash) => {
         if(err) {
             console.log(err);
-            return res.status(500).json({
+            return res.status(422).json({
                 message: MSGS.erroHash
             });
         }
@@ -116,8 +148,8 @@ module.exports.updateUsuario = (req, res, next) => {
                     next();
                 })
                 .catch(err => {
-                    res.status(500).json({
-                        message: MSGS.erroServidor
+                    res.status(422).json({
+                        message: MSGS.erroRequisicao
                     });
                     console.log(err);
                 });

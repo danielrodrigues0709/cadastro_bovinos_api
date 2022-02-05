@@ -6,6 +6,10 @@ module.exports.MSGS = {
     sucessoConexao: 'Conectado a base de dados',
     erroConexao: 'Erro ao conectar a base de dados',
     fechaConexao: 'Conexão fechada',
+    // Schemas
+    schemaCriado: 'Schema criado',
+    schemaDeletado: 'Schema deletado',
+    erroSchema: 'Erro ao criar schema',
     // Tabelas
     tabelaCriada: 'Tabela criada',
     erroTabela: 'Erro ao criar tabela',
