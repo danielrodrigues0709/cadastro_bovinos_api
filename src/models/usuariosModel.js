@@ -28,5 +28,5 @@ module.exports.deleteUsuario = async (id) => {
 
 module.exports.updateUsuario = async (usuario, email, senha,  id) => {
     await dbQuery(`UPDATE usuarios SET usuario = '${usuario}', email = '${email}', senha = '${senha}' WHERE id = ${id}`);
-    return this.selectUsuario(id);
+    return this.selectUsuarioById(id);
 }

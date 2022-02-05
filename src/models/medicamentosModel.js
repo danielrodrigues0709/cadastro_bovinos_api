@@ -28,5 +28,5 @@ module.exports.deleteMedicamento = async (id, schema) => {
 
 module.exports.updateMedicamento = async (medicamento, id, schema) => {
     await dbQuery(`UPDATE ${schema}medicamentos SET medicamento = '${medicamento}' WHERE id = ${id}`);
-    return this.selectMedicamento(id, schema);
+    return this.selectMedicamentoById(id, schema);
 }
