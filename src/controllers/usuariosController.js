@@ -1,5 +1,6 @@
-const { listUsuarios, selectUsuario, insertUsuario, deleteUsuario, updateUsuario } = require("../models/usuariosModel");
+const { listUsuarios, insertUsuario, deleteUsuario, updateUsuario, selectUsuarioById, selectUsuarioByUsername } = require("../models/usuariosModel");
 const { MSGS } = require("../../msgs");
+const bcrypt = require("bcrypt");
 
 module.exports.listUsuarios = (req, res, next) => {
     listUsuarios()
@@ -7,7 +8,7 @@ module.exports.listUsuarios = (req, res, next) => {
             res.status(200).json(usuarios);
             next();
         })
-        .catch(() => {
+        .catch(err => {
             res.status(500).json({
                 message: MSGS.erroServidor
             });
@@ -17,33 +18,67 @@ module.exports.listUsuarios = (req, res, next) => {
 
 module.exports.insertUsuario = (req, res, next) => {
     const body = req.body;
-    insertUsuario(body.usuario, body.email, body.senha)
-        .then(response => {
-            res.status(201).json({
-                message: response
+    selectUsuarioByUsername(body.usuario).then(response => {
+        if(response.rowCount > 0) {
+            return res.status(500).json({
+                message: MSGS.usuarioJaExistente
             });
-            next();
-        })
-        .catch(() => {
-            res.status(500).json({
-                message: MSGS.erroServidor
+        }
+        else {
+            bcrypt.hash(req.body.senha, 10, (err, hash) => {
+                if(err) {
+                    console.log(err);
+                    return res.status(500).json({
+                        message: MSGS.erroHash
+                    });
+                }
+                else {
+                    insertUsuario(body.usuario, body.email, hash)
+                        .then(response => {
+                            res.status(201).json({
+                                message: response
+                            });
+                            next();
+                        })
+                        .catch(err => {
+                            res.status(500).json({
+                                message: MSGS.erroServidor
+                            });
+                            console.log(err);
+                        });
+                }
             });
-            console.log(err)
-        });
+        }
+    });
 }
 
-module.exports.selectUsuario = (req, res, next) => {
+module.exports.selectUsuarioById = (req, res, next) => {
     const id = Number(req.params.id);
-    selectUsuario(id)
+    selectUsuarioById(id)
         .then(usuario => {
             res.status(200).json(usuario);
             next();
         })
-        .catch(() => {
+        .catch(err => {
             res.status(500).json({
                 message: MSGS.erroServidor
             });
-            console.log(err)
+            console.log(err);
+        });
+}
+
+module.exports.selectUsuarioByUsername = (req, res, next) => {
+    const usuario = req.params.usuario;
+    selectUsuarioByUsername(usuario)
+        .then(usuario => {
+            res.status(200).json(usuario);
+            next();
+        })
+        .catch(err => {
+            res.status(500).json({
+                message: MSGS.erroServidor
+            });
+            console.log(err);
         });
 }
 
@@ -56,26 +91,36 @@ module.exports.deleteUsuario = (req, res, next) => {
             });
             next();
         })
-        .catch(() => {
+        .catch(err => {
             res.status(500).json({
                 message: MSGS.erroServidor
             });
-            console.log(err)
+            console.log(err);
         });
 }
 
 module.exports.updateUsuario = (req, res, next) => {
     const body = req.body;
     const id = Number(req.params.id);
-    updateUsuario(body.usuario, body.email, body.senha, id)
-        .then(usuario => {
-            res.json({usuario});
-            next();
-        })
-        .catch(() => {
-            res.status(500).json({
-                message: MSGS.erroServidor
+    bcrypt.hash(req.body.senha, 10, (err, hash) => {
+        if(err) {
+            console.log(err);
+            return res.status(500).json({
+                message: MSGS.erroHash
             });
-            console.log(err)
-        });
+        }
+        else {
+            updateUsuario(body.usuario, body.email, hash, id)
+                .then(usuario => {
+                    res.json({usuario});
+                    next();
+                })
+                .catch(err => {
+                    res.status(500).json({
+                        message: MSGS.erroServidor
+                    });
+                    console.log(err);
+                });
+        }
+    });
 }

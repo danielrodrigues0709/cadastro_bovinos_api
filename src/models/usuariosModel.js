@@ -11,8 +11,13 @@ module.exports.insertUsuario = async (usuario, email, senha) => {
     return `${MSGS.registroCriado}`;
 }
 
-module.exports.selectUsuario = async (id) => {
+module.exports.selectUsuarioById = async (id) => {
     const retorno = await dbQuery(`SELECT * FROM usuarios WHERE id = ${id}`);
+    return retorno;
+}
+
+module.exports.selectUsuarioByUsername = async (usuario) => {
+    const retorno = await dbQuery(`SELECT * FROM usuarios WHERE usuario = '${usuario}'`);
     return retorno;
 }
 
