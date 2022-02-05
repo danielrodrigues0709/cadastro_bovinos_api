@@ -1,15 +1,17 @@
 module.exports.MSGS = {
     // Servidor
     servidor: 'Servidor rodando na porta',
-    servidorDesligado: 'Servidor desligado',
     erroServidor: 'Erro de servidor',
     // BD
     sucessoConexao: 'Conectado a base de dados',
     erroConexao: 'Erro ao conectar a base de dados',
     fechaConexao: 'Conexão fechada',
+    // Schemas
+    schemaCriado: 'Schema criado',
+    schemaDeletado: 'Schema deletado',
+    erroSchema: 'Erro ao criar schema',
     // Tabelas
     tabelaCriada: 'Tabela criada',
-    tabelaDeletada: 'Tabela deletada',
     erroTabela: 'Erro ao criar tabela',
     // Responses
     erroRequisicao: 'Erro ao efetuar requisição',
@@ -17,5 +19,7 @@ module.exports.MSGS = {
     registroCriado: 'Registro criado',
     registroAtualizado: 'Registro atualizado, id',
     registroDeletado: 'Registro deletado, id',
-    registroNaoEncontrado: 'Registro não encontrado',
+    //registroNaoEncontrado: 'Registro não encontrado',
+    erroHash: 'Erro ao criptografar senha',
+    usuarioJaExistente: 'Este nome de usuário já está em uso',
 }
