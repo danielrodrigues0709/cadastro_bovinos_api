@@ -12,3 +12,9 @@ module.exports.createMedicamentosTable = async (nome_schema) => {
     await dbQuery(`CREATE TABLE IF NOT EXISTS ${schema}medicamentos (id SERIAL PRIMARY KEY,medicamento VARCHAR(50))`);
     return `${MSGS.tabelaCriada} medicamentos`;
 }
+
+module.exports.createVacinasTable = async (nome_schema) => {
+    const schema = nome_schema ? nome_schema+'.': '';
+    await dbQuery(`CREATE TABLE IF NOT EXISTS ${schema}vacinas (id SERIAL PRIMARY KEY,vacina_vermifugo VARCHAR(50), doses SMALLINT)`);
+    return `${MSGS.tabelaCriada} vacinas`;
+}

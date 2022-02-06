@@ -5,6 +5,7 @@ const bodyParser = require('body-parser');
 
 const usuariosRoutes = require('./src/routes/usuariosRoutes');
 const medicamentosRoutes = require('./src/routes/medicamentosRoutes');
+const vacinasRoutes = require('./src/routes/vacinasRoutes');
 const { createUsuariosTable } = require('./src/tables');
 
 app.use(morgan('dev'));
@@ -32,5 +33,6 @@ app.use((req, res, next) => {
 
 app.use('/usuarios', usuariosRoutes);
 app.use('/medicamentos', medicamentosRoutes);
+app.use('/vacinas', vacinasRoutes);
 
 module.exports = app;
