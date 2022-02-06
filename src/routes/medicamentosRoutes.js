@@ -5,7 +5,7 @@ const { listMedicamentos, insertMedicamento, deleteMedicamento, updateMedicament
 
 medicamentosRouter.get('/', listMedicamentos);
 medicamentosRouter.get('/:id', selectMedicamentoById);
-medicamentosRouter.get('/searcByDesc/:medicamento', selectMedicamentoByDesc);
+medicamentosRouter.get('/searchByDesc/:medicamento', selectMedicamentoByDesc);
 medicamentosRouter.post('/', insertMedicamento);
 medicamentosRouter.delete('/:id', deleteMedicamento);
 medicamentosRouter.patch('/:id', updateMedicamento);

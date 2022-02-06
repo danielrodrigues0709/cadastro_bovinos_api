@@ -5,7 +5,7 @@ const { listUsuarios, insertUsuario, selectUsuarioById, deleteUsuario, updateUsu
 
 usuariosRouter.get('/', listUsuarios);
 usuariosRouter.get('/:id', selectUsuarioById);
-usuariosRouter.get('/searcByUsername/:usuario', selectUsuarioByUsername);
+usuariosRouter.get('/searchByUsername/:usuario', selectUsuarioByUsername);
 usuariosRouter.post('/', insertUsuario);
 usuariosRouter.delete('/:id', deleteUsuario);
 usuariosRouter.patch('/:id', updateUsuario);

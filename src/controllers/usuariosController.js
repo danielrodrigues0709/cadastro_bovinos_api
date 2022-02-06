@@ -4,7 +4,7 @@ const { listUsuarios, insertUsuario, deleteUsuario, updateUsuario, selectUsuario
 const { MSGS } = require("../../msgs");
 const { createSchemaSql } = require("../schemas");
 const { snakeCase } = require("../../utils");
-const { createMedicamentosTable } = require("../tables");
+const { createMedicamentosTable, createVacinasTable } = require("../tables");
 
 module.exports.listUsuarios = (req, res, next) => {
     listUsuarios()
@@ -53,6 +53,18 @@ module.exports.insertUsuario = (req, res, next) => {
                                 })
                                 .then(async () => {
                                     await createMedicamentosTable(snakeCase(body.usuario))
+                                        .then(response => {
+                                            console.log(response);
+                                            res.status(200);
+                                            next();
+                                        })
+                                        .catch(err => {
+                                            console.log(err);
+                                            return res.status(422).json({
+                                                message: MSGS.erroTabela
+                                            });
+                                        });
+                                    await createVacinasTable(snakeCase(body.usuario))
                                         .then(response => {
                                             console.log(response);
                                             res.status(200);
