@@ -19,7 +19,7 @@ module.exports.listVacinas = (req, res, next) => {
 module.exports.insertVacina = (req, res, next) => {
     const body = req.body;
     const schema = req.headers.schema ? req.headers.schema+'.': '';
-    insertVacina(body.vacina_vermifugo, body.doses, schema)
+    insertVacina(body.vacina_vermifugo, body.doses, body.tipo, schema)
         .then(response => {
             res.status(201).json({
                 message: response
@@ -88,7 +88,7 @@ module.exports.updateVacina = (req, res, next) => {
     const body = req.body;
     const id = Number(req.params.id);
     const schema = req.headers.schema ? req.headers.schema+'.': '';
-    updateVacina(body.vacina_vermifugo, body.doses, id, schema)
+    updateVacina(body.vacina_vermifugo, body.doses, body.tipo, id, schema)
         .then(vacina => {
             res.json({vacina});
             next();

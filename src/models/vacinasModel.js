@@ -6,8 +6,8 @@ module.exports.listVacinas = async (schema) => {
     return retorno;
 }
 
-module.exports.insertVacina = async (vacina_vermifugo, doses, schema) => {
-    await dbQuery(`INSERT INTO ${schema}vacinas(vacina_vermifugo, doses) VALUES('${vacina_vermifugo}', ${doses})`);
+module.exports.insertVacina = async (vacina_vermifugo, doses, tipo, schema) => {
+    await dbQuery(`INSERT INTO ${schema}vacinas(vacina_vermifugo, doses, tipo) VALUES('${vacina_vermifugo}', ${doses}, '${tipo}')`);
     return `${MSGS.registroCriado}`;
 }
 
@@ -26,7 +26,7 @@ module.exports.deleteVacina = async (id, schema) => {
     return `${MSGS.registroDeletado} ${id}`; 
 }
 
-module.exports.updateVacina = async (vacina_vermifugo, doses, id, schema) => {
-    await dbQuery(`UPDATE ${schema}vacinas SET vacina_vermifugo = '${vacina_vermifugo}', doses = ${doses} WHERE id = ${id}`);
+module.exports.updateVacina = async (vacina_vermifugo, doses, tipo, id, schema) => {
+    await dbQuery(`UPDATE ${schema}vacinas SET vacina_vermifugo = '${vacina_vermifugo}', doses = ${doses}, '${tipo}' WHERE id = ${id}`);
     return this.selectVacinaById(id, schema);
 }
