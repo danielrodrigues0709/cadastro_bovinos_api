@@ -7,6 +7,7 @@ const usuariosRoutes = require('./src/routes/usuariosRoutes');
 const medicamentosRoutes = require('./src/routes/medicamentosRoutes');
 const vacinasRoutes = require('./src/routes/vacinasRoutes');
 const { createUsuariosTable } = require('./src/tables');
+const animaisRouter = require('./src/routes/animaisRoutes');
 
 app.use(morgan('dev'));
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -34,5 +35,6 @@ app.use((req, res, next) => {
 app.use('/usuarios', usuariosRoutes);
 app.use('/medicamentos', medicamentosRoutes);
 app.use('/vacinas', vacinasRoutes);
+app.use('/animais', animaisRouter);
 
 module.exports = app;

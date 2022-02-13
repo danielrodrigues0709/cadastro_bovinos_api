@@ -1,9 +1,11 @@
-const { listVacinas, selectVacinaById, selectVacinaByDesc, insertVacina, deleteVacina, updateVacina } = require("../models/vacinasModel");
+const { listVacinas, selectVacinaById, insertVacina, deleteVacina, updateVacina } = require("../models/vacinasModel");
 const { MSGS } = require("../../msgs");
 
 module.exports.listVacinas = (req, res, next) => {
+    const vacina_vermifugo = req.query.vacina_vermifugo;
+    const tipo = req.query.tipo;
     const schema = req.headers.schema ? req.headers.schema+'.': '';
-    listVacinas(schema)
+    listVacinas(vacina_vermifugo, tipo, schema)
         .then(vacinas => {
             res.status(200).json(vacinas);
             next();
@@ -47,22 +49,6 @@ module.exports.selectVacinaById = (req, res, next) => {
                 message: MSGS.erroRequisicao
             });
             console.log(err)
-        });
-}
-
-module.exports.selectVacinaByDesc = (req, res, next) => {
-    const vacina_vermifugo = req.params.vacina_vermifugo;
-    const schema = req.headers.schema ? req.headers.schema+'.': '';
-    selectVacinaByDesc(vacina_vermifugo, schema)
-        .then(vacina => {
-            res.status(200).json(vacina);
-            next();
-        })
-        .catch(err => {
-            res.status(422).json({
-                message: MSGS.erroRequisicao
-            });
-            console.log(err);
         });
 }
 
