@@ -1,4 +1,4 @@
-const { listAnimais, selectAnimalById, insertAnimal, deleteAnimal, updateAnimal } = require("../models/animaisModel");
+const { listAnimais, selectAnimalById, insertAnimal, deleteAnimal, updateAnimal, selectFather, selectMother, selectAnimalNumControle } = require("../models/animaisModel");
 const { MSGS } = require("../../msgs");
 
 module.exports.listAnimais = (req, res, next) => {
@@ -45,11 +45,36 @@ module.exports.insertAnimal = (req, res, next) => {
     const id_pai = req.body.id_pai;
     const id_mae = req.body.id_mae;
     const schema = req.headers.schema ? req.headers.schema+'.': '';
-    insertAnimal(nome_animal, nro_controle, data_nascimento, sexo, matriz, rebanho, registrado, id_pai, id_mae, schema)
-        .then(response => {
-            res.status(201).json({
-                message: response
+    selectAnimalNumControle(nro_controle, schema).then(response => {
+        if(response.rowCount > 0) {
+            return res.status(422).json({
+                message: MSGS.registroExistente
             });
+        }
+        else {
+            insertAnimal(nome_animal, nro_controle, data_nascimento, sexo, matriz, rebanho, registrado, id_pai, id_mae, schema)
+                .then(response => {
+                    res.status(201).json({
+                        message: response
+                    });
+                    next();
+                })
+                .catch(err => {
+                    res.status(422).json({
+                        message: MSGS.erroRequisicao
+                    });
+                    console.log(err)
+                });
+        }
+    });
+}
+
+module.exports.selectAnimalById = (req, res, next) => {
+    const id = Number(req.params.id);
+    const schema = req.headers.schema ? req.headers.schema+'.': '';
+    selectAnimalById(id, schema)
+        .then(animal => {
+            res.status(200).json(animal);
             next();
         })
         .catch(err => {
@@ -60,10 +85,26 @@ module.exports.insertAnimal = (req, res, next) => {
         });
 }
 
-module.exports.selectAnimalById = (req, res, next) => {
+module.exports.selectFather = (req, res, next) => {
     const id = Number(req.params.id);
     const schema = req.headers.schema ? req.headers.schema+'.': '';
-    selectAnimalById(id, schema)
+    selectFather(id, schema)
+        .then(animal => {
+            res.status(200).json(animal);
+            next();
+        })
+        .catch(err => {
+            res.status(422).json({
+                message: MSGS.erroRequisicao
+            });
+            console.log(err)
+        });
+}
+
+module.exports.selectMother = (req, res, next) => {
+    const id = Number(req.params.id);
+    const schema = req.headers.schema ? req.headers.schema+'.': '';
+    selectMother(id, schema)
         .then(animal => {
             res.status(200).json(animal);
             next();

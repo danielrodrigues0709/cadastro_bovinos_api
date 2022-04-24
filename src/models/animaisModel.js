@@ -31,9 +31,25 @@ module.exports.insertAnimal = async (nome_animal, nro_controle, data_nascimento,
 }
 
 module.exports.selectAnimalById = async (id, schema) => {
-    const retorno = await dbQuery(`SELECT f.*, p.*, m.* FROM ${schema}animais f
-    FULL OUTER JOIN ${schema}animais p ON f.id_pai = p.id
-    FULL OUTER JOIN ${schema}animais m ON f.id_mae = m.id
+    const retorno = await dbQuery(`SELECT * FROM ${schema}animais WHERE id = ${id}`);
+    return retorno;
+}
+
+module.exports.selectAnimalNumControle = async (nro_controle, schema) => {
+    const retorno = await dbQuery(`SELECT * FROM ${schema}animais WHERE nro_controle = ${nro_controle}`);
+    return retorno;
+}
+
+module.exports.selectFather = async (id, schema) => {
+    const retorno = await dbQuery(`SELECT p.* FROM ${schema}animais f
+    JOIN ${schema}animais p ON f.id_pai = p.id
+    WHERE f.id = ${id}`);
+    return retorno;
+}
+
+module.exports.selectMother = async (id, schema) => {
+    const retorno = await dbQuery(`SELECT m.* FROM ${schema}animais f
+    JOIN ${schema}animais m ON f.id_mae = m.id
     WHERE f.id = ${id}`);
     return retorno;
 }
