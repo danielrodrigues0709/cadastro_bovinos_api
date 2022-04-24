@@ -1,9 +1,11 @@
-const { listVacinas, selectVacinaById, selectVacinaByDesc, insertVacina, deleteVacina, updateVacina } = require("../models/vacinasModel");
+const { listVacinas, selectVacinaById, insertVacina, deleteVacina, updateVacina } = require("../models/vacinasModel");
 const { MSGS } = require("../../msgs");
 
 module.exports.listVacinas = (req, res, next) => {
+    const vacina_vermifugo = req.query.vacina_vermifugo;
+    const tipo = req.query.tipo;
     const schema = req.headers.schema ? req.headers.schema+'.': '';
-    listVacinas(schema)
+    listVacinas(vacina_vermifugo, tipo, schema)
         .then(vacinas => {
             res.status(200).json(vacinas);
             next();
@@ -19,7 +21,7 @@ module.exports.listVacinas = (req, res, next) => {
 module.exports.insertVacina = (req, res, next) => {
     const body = req.body;
     const schema = req.headers.schema ? req.headers.schema+'.': '';
-    insertVacina(body.vacina_vermifugo, body.doses, schema)
+    insertVacina(body.vacina_vermifugo, body.doses, body.tipo, schema)
         .then(response => {
             res.status(201).json({
                 message: response
@@ -50,22 +52,6 @@ module.exports.selectVacinaById = (req, res, next) => {
         });
 }
 
-module.exports.selectVacinaByDesc = (req, res, next) => {
-    const vacina_vermifugo = req.params.vacina_vermifugo;
-    const schema = req.headers.schema ? req.headers.schema+'.': '';
-    selectVacinaByDesc(vacina_vermifugo, schema)
-        .then(vacina => {
-            res.status(200).json(vacina);
-            next();
-        })
-        .catch(err => {
-            res.status(422).json({
-                message: MSGS.erroRequisicao
-            });
-            console.log(err);
-        });
-}
-
 module.exports.deleteVacina = (req, res, next) => {
     const id = Number(req.params.id);
     const schema = req.headers.schema ? req.headers.schema+'.': '';
@@ -88,7 +74,7 @@ module.exports.updateVacina = (req, res, next) => {
     const body = req.body;
     const id = Number(req.params.id);
     const schema = req.headers.schema ? req.headers.schema+'.': '';
-    updateVacina(body.vacina_vermifugo, body.doses, id, schema)
+    updateVacina(body.vacina_vermifugo, body.doses, body.tipo, id, schema)
         .then(vacina => {
             res.json({vacina});
             next();
