@@ -6,6 +6,7 @@ module.exports.listAnimais = (req, res, next) => {
     const nro_controle = req.query.nro_controle;
     const sexo = req.query.sexo;
     const matriz = req.query.matriz;
+    const producao = req.query.producao;
     const rebanho = req.query.rebanho;
     const registrado = req.query.registrado;
     const id_pai = req.query.id_pai;
@@ -15,8 +16,9 @@ module.exports.listAnimais = (req, res, next) => {
     listAnimais(
         nome_animal,
         nro_controle ? nro_controle : null,
-        sexo,
+        sexo ? sexo : null,
         matriz ? matriz : null,
+        producao ? producao : null,
         rebanho ? rebanho : null,
         registrado ? registrado : null,
         id_pai ? id_pai : null,
@@ -40,6 +42,7 @@ module.exports.insertAnimal = (req, res, next) => {
     const data_nascimento = req.body.data_nascimento;
     const sexo = req.body.sexo;
     const matriz = req.body.matriz;
+    const producao = req.body.producao;
     const rebanho = req.body.rebanho;
     const registrado = req.body.registrado;
     const id_pai = req.body.id_pai;
@@ -52,7 +55,7 @@ module.exports.insertAnimal = (req, res, next) => {
             });
         }
         else {
-            insertAnimal(nome_animal, nro_controle, data_nascimento, sexo, matriz, rebanho, registrado, id_pai, id_mae, schema)
+            insertAnimal(nome_animal, nro_controle, data_nascimento, sexo, matriz, producao, rebanho, registrado, id_pai, id_mae, schema)
                 .then(response => {
                     res.status(201).json({
                         message: response
@@ -142,12 +145,13 @@ module.exports.updateAnimal = (req, res, next) => {
     const data_nascimento = req.body.data_nascimento;
     const sexo = req.body.sexo;
     const matriz = req.body.matriz;
+    const producao = req.body.producao;
     const rebanho = req.body.rebanho;
     const registrado = req.body.registrado;
     const id_pai = req.body.id_pai;
     const id_mae = req.body.id_mae;
     const schema = req.headers.schema ? req.headers.schema+'.': '';
-    updateAnimal(id, nome_animal, nro_controle, data_nascimento, sexo, matriz, rebanho, registrado, id_pai, id_mae, schema)
+    updateAnimal(id, nome_animal, nro_controle, data_nascimento, sexo, matriz, producao, rebanho, registrado, id_pai, id_mae, schema)
         .then(animal => {
             res.json({animal});
             next();
