@@ -1,12 +1,13 @@
 const { dbQuery } = require("../../db");
 const { MSGS } = require("../../msgs");
 
-module.exports.listAnimais = async (nome_animal, nro_controle, sexo, matriz, rebanho, registrado, id_pai, id_mae, schema) => {
+module.exports.listAnimais = async (nome_animal, nro_controle, sexo, matriz, producao, rebanho, registrado, id_pai, id_mae, schema) => {
     const retorno = await dbQuery(`SELECT * FROM ${schema}animais WHERE 
         ( '${nome_animal}' = '' OR '${nome_animal}' IS NULL OR nome_animal LIKE '%${nome_animal}%') AND
         ( ${nro_controle} IS NULL OR nro_controle = ${nro_controle}) AND
-        ('${sexo}' = '' OR '${sexo}' IS NULL OR sexo LIKE '${sexo}') AND
+        ( ${sexo} IS NULL OR sexo = ${sexo}) AND
         ( ${matriz} IS NULL OR matriz = ${matriz}) AND
+        ( ${producao} IS NULL OR producao = ${producao}) AND
         ( ${rebanho} IS NULL OR rebanho = ${rebanho}) AND
         ( ${registrado} IS NULL OR registrado = ${registrado}) AND
         ( ${id_pai} IS NULL OR id_pai = ${id_pai}) AND
@@ -14,14 +15,15 @@ module.exports.listAnimais = async (nome_animal, nro_controle, sexo, matriz, reb
     return retorno;
 }
 
-module.exports.insertAnimal = async (nome_animal, nro_controle, data_nascimento, sexo, matriz, rebanho, registrado, id_pai, id_mae, schema) => {
-    await dbQuery(`INSERT INTO ${schema}animais(nome_animal, nro_controle, data_nascimento, sexo, matriz, rebanho, registrado, id_pai, id_mae
+module.exports.insertAnimal = async (nome_animal, nro_controle, data_nascimento, sexo, matriz, producao, rebanho, registrado, id_pai, id_mae, schema) => {
+    await dbQuery(`INSERT INTO ${schema}animais(nome_animal, nro_controle, data_nascimento, sexo, matriz, producao, rebanho, registrado, id_pai, id_mae
     ) VALUES(
         '${nome_animal}',
         ${nro_controle},
         '${data_nascimento}',
-        '${sexo}',
+        ${sexo},
         ${matriz},
+        ${producao},
         ${rebanho},
         ${registrado},
         ${id_pai},
@@ -64,13 +66,14 @@ module.exports.deleteAnimal = async (id, schema) => {
     return `${MSGS.registroDeletado} ${id}`; 
 }
 
-module.exports.updateAnimal = async (id, nome_animal, nro_controle, data_nascimento, sexo, matriz, rebanho, registrado, id_pai, id_mae, schema) => {
+module.exports.updateAnimal = async (id, nome_animal, nro_controle, data_nascimento, sexo, matriz, producao, rebanho, registrado, id_pai, id_mae, schema) => {
     await dbQuery(`UPDATE ${schema}animais SET 
         nome_animal = '${nome_animal}',
         nro_controle = ${nro_controle},
         data_nascimento = '${data_nascimento}',
-        sexo = '${sexo}',
+        sexo = ${sexo},
         matriz = ${matriz},
+        producao = ${producao},
         rebanho = ${rebanho},
         registrado = ${registrado},
         id_pai = ${id_pai},
