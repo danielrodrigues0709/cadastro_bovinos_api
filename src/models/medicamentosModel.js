@@ -17,7 +17,7 @@ module.exports.selectMedicamentoById = async (id, schema) => {
 }
 
 module.exports.selectMedicamentoByDesc = async (medicamento, schema) => {
-    const retorno = await dbQuery(`SELECT * FROM ${schema}medicamentos WHERE medicamento LIKE '%${medicamento}%'`);
+    const retorno = await dbQuery(`SELECT * FROM ${schema}medicamentos WHERE medicamento ILIKE '%${medicamento}%'`);
     return retorno;
 }
 

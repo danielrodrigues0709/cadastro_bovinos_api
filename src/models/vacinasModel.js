@@ -3,8 +3,8 @@ const { MSGS } = require("../../msgs");
 
 module.exports.listVacinas = async (vacina_vermifugo, tipo, schema) => {
     const retorno = await dbQuery(`SELECT * FROM ${schema}vacinas WHERE 
-        ( '${vacina_vermifugo}' = '' OR '${vacina_vermifugo}' IS NULL OR vacina_vermifugo LIKE '%${vacina_vermifugo}%') AND
-        ( '${tipo}' = '' OR '${tipo}' IS NULL OR tipo LIKE '${tipo}')`);
+        ( '${vacina_vermifugo}' = '' OR '${vacina_vermifugo}' IS NULL OR vacina_vermifugo ILIKE '%${vacina_vermifugo}%') AND
+        ( '${tipo}' = '' OR '${tipo}' IS NULL OR tipo ILIKE '${tipo}')`);
     return retorno;
 }
 
