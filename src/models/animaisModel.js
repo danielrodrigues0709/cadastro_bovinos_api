@@ -63,7 +63,7 @@ module.exports.selectAnimalRebanho = async (schema) => {
 
 module.exports.deleteAnimal = async (id, schema) => {
     await dbQuery(`DELETE FROM ${schema}animais WHERE id = ${id}`);
-    return `${MSGS.registroDeletado} ${id}`; 
+    return `${MSGS.registroDeletado}`; 
 }
 
 module.exports.updateAnimal = async (id, nome_animal, nro_controle, data_nascimento, sexo, matriz, producao, rebanho, registrado, id_pai, id_mae, schema) => {
@@ -79,5 +79,5 @@ module.exports.updateAnimal = async (id, nome_animal, nro_controle, data_nascime
         id_pai = ${id_pai},
         id_mae = ${id_mae}
         WHERE id = ${id}`);
-    return this.selectAnimalById(id, schema);
+    return `${MSGS.registroAtualizado}`;
 }

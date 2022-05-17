@@ -34,7 +34,7 @@ module.exports.createVacinasTable = async (nome_schema) => {
         (
         id SERIAL PRIMARY KEY,
         vacina_vermifugo VARCHAR(50),
-        tipo VARCHAR(50),
+        tipo SMALLINT,
         doses SMALLINT
         )`
     );

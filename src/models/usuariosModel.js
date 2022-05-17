@@ -23,10 +23,10 @@ module.exports.selectUsuarioByUsername = async (usuario) => {
 
 module.exports.deleteUsuario = async (id) => {
     await dbQuery(`DELETE FROM usuarios WHERE id = ${id}`);
-    return `${MSGS.registroDeletado} ${id}`; 
+    return `${MSGS.registroDeletado}`; 
 }
 
 module.exports.updateUsuario = async (usuario, email, senha,  id) => {
     await dbQuery(`UPDATE usuarios SET usuario = '${usuario}', email = '${email}', senha = '${senha}' WHERE id = ${id}`);
-    return this.selectUsuarioById(id);
+    return `${MSGS.registroAtualizado}`;
 }

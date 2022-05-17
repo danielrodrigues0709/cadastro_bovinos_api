@@ -89,8 +89,10 @@ module.exports.updateMedicamento = (req, res, next) => {
     const id = Number(req.params.id);
     const schema = req.headers.schema ? req.headers.schema+'.': '';
     updateMedicamento(body.medicamento, id, schema)
-        .then(medicamento => {
-            res.json({medicamento});
+        .then(response => {
+            res.status(200).json({
+                message: response
+            });
             next();
         })
         .catch(err => {

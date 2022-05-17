@@ -5,7 +5,7 @@ module.exports.listVacinas = (req, res, next) => {
     const vacina_vermifugo = req.query.vacina_vermifugo;
     const tipo = req.query.tipo;
     const schema = req.headers.schema ? req.headers.schema+'.': '';
-    listVacinas(vacina_vermifugo, tipo, schema)
+    listVacinas(vacina_vermifugo, tipo ? tipo : null, schema)
         .then(vacinas => {
             res.status(200).json(vacinas);
             next();
@@ -75,8 +75,10 @@ module.exports.updateVacina = (req, res, next) => {
     const id = Number(req.params.id);
     const schema = req.headers.schema ? req.headers.schema+'.': '';
     updateVacina(body.vacina_vermifugo, body.doses, body.tipo, id, schema)
-        .then(vacina => {
-            res.json({vacina});
+        .then(response => {
+            res.status(200).json({
+                message: response
+            });
             next();
         })
         .catch(err => {

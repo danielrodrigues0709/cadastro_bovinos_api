@@ -152,8 +152,10 @@ module.exports.updateAnimal = (req, res, next) => {
     const id_mae = req.body.id_mae;
     const schema = req.headers.schema ? req.headers.schema+'.': '';
     updateAnimal(id, nome_animal, nro_controle, data_nascimento, sexo, matriz, producao, rebanho, registrado, id_pai, id_mae, schema)
-        .then(animal => {
-            res.json({animal});
+        .then(response => {
+            res.status(200).json({
+                message: response
+            });
             next();
         })
         .catch(err => {
