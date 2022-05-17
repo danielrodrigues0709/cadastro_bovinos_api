@@ -75,8 +75,10 @@ module.exports.updateVacina = (req, res, next) => {
     const id = Number(req.params.id);
     const schema = req.headers.schema ? req.headers.schema+'.': '';
     updateVacina(body.vacina_vermifugo, body.doses, body.tipo, id, schema)
-        .then(vacina => {
-            res.json({vacina});
+        .then(response => {
+            res.status(200).json({
+                message: response
+            });
             next();
         })
         .catch(err => {

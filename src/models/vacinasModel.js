@@ -20,10 +20,10 @@ module.exports.selectVacinaById = async (id, schema) => {
 
 module.exports.deleteVacina = async (id, schema) => {
     await dbQuery(`DELETE FROM ${schema}vacinas WHERE id = ${id}`);
-    return `${MSGS.registroDeletado} ${id}`; 
+    return `${MSGS.registroDeletado}`; 
 }
 
 module.exports.updateVacina = async (vacina_vermifugo, doses, tipo, id, schema) => {
     await dbQuery(`UPDATE ${schema}vacinas SET vacina_vermifugo = '${vacina_vermifugo}', doses = ${doses}, tipo = '${tipo}' WHERE id = ${id}`);
-    return this.selectVacinaById(id, schema);
+    return `${MSGS.registroAtualizado}`;
 }

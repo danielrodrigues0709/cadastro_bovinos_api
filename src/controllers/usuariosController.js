@@ -215,8 +215,10 @@ module.exports.updateUsuario = (req, res, next) => {
         }
         else {
             updateUsuario(body.usuario, body.email, hash, id)
-                .then(usuario => {
-                    res.json({usuario});
+                .then(response => {
+                    res.status(200).json({
+                        message: response
+                    });
                     next();
                 })
                 .catch(err => {
