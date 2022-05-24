@@ -132,6 +132,8 @@ module.exports.createVacinacoesTable = async (nome_schema) => {
         (
         id SERIAL PRIMARY KEY,
         data_vacinacao DATE,
+        tipo SMALLINT,
+        dose SMALLINT,
         id_animal SMALLINT,
         id_vacina SMALLINT
         )`
