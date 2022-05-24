@@ -4,13 +4,14 @@ const morgan = require('morgan');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 
+const { createUsuariosTable } = require('./src/tables');
 const usuariosRoutes = require('./src/routes/usuariosRoutes');
 const medicamentosRoutes = require('./src/routes/medicamentosRoutes');
 const vacinasRoutes = require('./src/routes/vacinasRoutes');
-const { createUsuariosTable } = require('./src/tables');
 const animaisRouter = require('./src/routes/animaisRoutes');
 const ocorrenciasRouter = require('./src/routes/ocorrenciasRoutes');
 const vacinacoesRouter = require('./src/routes/vacinacoesRoutes');
+const inseminacoesRouter = require('./src/routes/inseminacoesRoutes');
 
 app.use(morgan('dev'));
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -29,5 +30,6 @@ app.use('/vacinas', vacinasRoutes);
 app.use('/animais', animaisRouter);
 app.use('/ocorrencias', ocorrenciasRouter);
 app.use('/vacinacoes', vacinacoesRouter);
+app.use('/inseminacoes', inseminacoesRouter);
 
 module.exports = app;
