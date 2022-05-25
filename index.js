@@ -12,6 +12,7 @@ const animaisRouter = require('./src/routes/animaisRoutes');
 const ocorrenciasRouter = require('./src/routes/ocorrenciasRoutes');
 const vacinacoesRouter = require('./src/routes/vacinacoesRoutes');
 const inseminacoesRouter = require('./src/routes/inseminacoesRoutes');
+const partosRouter = require('./src/routes/partosRoutes');
 
 app.use(morgan('dev'));
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -31,5 +32,6 @@ app.use('/animais', animaisRouter);
 app.use('/ocorrencias', ocorrenciasRouter);
 app.use('/vacinacoes', vacinacoesRouter);
 app.use('/inseminacoes', inseminacoesRouter);
+app.use('/partos', partosRouter);
 
 module.exports = app;
