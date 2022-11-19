@@ -4,8 +4,9 @@ const { MSGS } = require("../../msgs");
 module.exports.listOcorrencias = (req, res, next) => {
     const id_animal = req.query.id_animal;
     const id_medicamento = req.query.id_medicamento;
+    const morte = req.query.morte;
     const schema = req.headers.schema ? req.headers.schema+'.': '';
-    listOcorrencias(id_animal ? id_animal : null, id_medicamento ? id_medicamento : null, schema)
+    listOcorrencias(id_animal ? id_animal : null, id_medicamento ? id_medicamento : null, morte ? morte : null, schema)
         .then(ocorrencias => {
             res.status(200).json(ocorrencias);
             next();
