@@ -162,7 +162,8 @@ module.exports.createOcorrenciasTable = async (nome_schema) => {
         data_ocorrencia DATE,
         descricao VARCHAR(500),
         id_animal SMALLINT,
-        id_medicamento SMALLINT
+        id_medicamento SMALLINT,
+        morte SMALLINT
         )`
     );
     /*
