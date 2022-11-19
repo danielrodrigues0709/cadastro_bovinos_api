@@ -37,6 +37,11 @@ module.exports.selectAnimalById = async (id, schema) => {
     return retorno;
 }
 
+module.exports.selectAnimalByDesc = async (nome_animal, schema) => {
+    const retorno = await dbQuery(`SELECT * FROM ${schema}animais WHERE nome_animal = ${nome_animal}`);
+    return retorno;
+}
+
 module.exports.selectAnimalNumControle = async (nro_controle, schema) => {
     const retorno = await dbQuery(`SELECT * FROM ${schema}animais WHERE nro_controle = ${nro_controle}`);
     return retorno;
