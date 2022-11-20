@@ -38,7 +38,7 @@ module.exports.selectAnimalById = async (id, schema) => {
 }
 
 module.exports.selectAnimalByDesc = async (nome_animal, schema) => {
-    const retorno = await dbQuery(`SELECT * FROM ${schema}animais WHERE nome_animal = ${nome_animal}`);
+    const retorno = await dbQuery(`SELECT * FROM ${schema}animais WHERE nome_animal ILIKE '%${nome_animal}%'`);
     return retorno;
 }
 

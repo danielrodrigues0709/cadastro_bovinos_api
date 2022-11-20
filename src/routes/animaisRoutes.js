@@ -1,10 +1,11 @@
 const express = require('express');
 const animaisRouter = express.Router();
 
-const { listAnimais, insertAnimal, deleteAnimal, updateAnimal, selectAnimalById, selectFather, selectMother } = require('../controllers/animaisController');
+const { listAnimais, insertAnimal, deleteAnimal, updateAnimal, selectAnimalById, selectFather, selectMother, selectAnimalByDesc } = require('../controllers/animaisController');
 
 animaisRouter.get('/', listAnimais);
 animaisRouter.get('/:id', selectAnimalById);
+animaisRouter.get('/searchByDesc/:nome_animal', selectAnimalByDesc);
 animaisRouter.get('/father/:id', selectFather);
 animaisRouter.get('/mother/:id', selectMother);
 animaisRouter.post('/', insertAnimal);
