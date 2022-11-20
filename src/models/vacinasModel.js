@@ -19,7 +19,7 @@ module.exports.selectVacinaById = async (id, schema) => {
 }
 
 module.exports.selectVacinaByDesc = async (vacina_vermifugo, schema) => {
-    const retorno = await dbQuery(`SELECT * FROM ${schema}vacinas WHERE vacina_vermifugo = ${vacina_vermifugo}`);
+    const retorno = await dbQuery(`SELECT * FROM ${schema}vacinas WHERE vacina_vermifugo ILIKE '%${vacina_vermifugo}%'`);
     return retorno;
 }
 
