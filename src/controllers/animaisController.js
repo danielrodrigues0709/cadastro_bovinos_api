@@ -1,4 +1,4 @@
-const { listAnimais, selectAnimalById, insertAnimal, deleteAnimal, updateAnimal, selectFather, selectMother, selectAnimalNumControle } = require("../models/animaisModel");
+const { listAnimais, selectAnimalById, insertAnimal, deleteAnimal, updateAnimal, selectFather, selectMother, selectAnimalNumControle, selectAnimalByDesc } = require("../models/animaisModel");
 const { MSGS } = require("../../msgs");
 
 module.exports.listAnimais = (req, res, next) => {
@@ -85,6 +85,22 @@ module.exports.selectAnimalById = (req, res, next) => {
                 message: MSGS.erroRequisicao
             });
             console.log(err)
+        });
+}
+
+module.exports.selectAnimalByDesc = (req, res, next) => {
+    const nome_animal = req.params.nome_animal;
+    const schema = req.headers.schema ? req.headers.schema+'.': '';
+    selectAnimalByDesc(nome_animal, schema)
+        .then(animal => {
+            res.status(200).json(animal);
+            next();
+        })
+        .catch(err => {
+            res.status(422).json({
+                message: MSGS.erroRequisicao
+            });
+            console.log(err);
         });
 }
 
