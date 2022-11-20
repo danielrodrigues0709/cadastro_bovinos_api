@@ -22,7 +22,7 @@ module.exports.listOcorrencias = (req, res, next) => {
 module.exports.insertOcorrencia = (req, res, next) => {
     const body = req.body;
     const schema = req.headers.schema ? req.headers.schema+'.': '';
-    insertOcorrencia(body.data_ocorrencia, body.descricao, body.id_animal, body.id_medicamento, schema)
+    insertOcorrencia(body.data_ocorrencia, body.descricao, body.id_animal, body.id_medicamento, body.morte, schema)
         .then(response => {
             res.status(201).json({
                 message: response
@@ -75,7 +75,7 @@ module.exports.updateOcorrencia = (req, res, next) => {
     const body = req.body;
     const id = Number(req.params.id);
     const schema = req.headers.schema ? req.headers.schema+'.': '';
-    updateOcorrencia(body.data_ocorrencia, body.descricao, body.id_animal, body.id_medicamento, id, schema)
+    updateOcorrencia(body.data_ocorrencia, body.descricao, body.id_animal, body.id_medicamento, body.morte,id, schema)
         .then(response => {
             res.status(200).json({
                 message: response

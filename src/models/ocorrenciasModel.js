@@ -10,7 +10,7 @@ module.exports.listOcorrencias = async (id_animal, id_medicamento, morte, schema
 }
 
 module.exports.insertOcorrencia = async (data_ocorrencia, descricao, id_animal, id_medicamento, morte, schema) => {
-    await dbQuery(`INSERT INTO ${schema}ocorrencias(data_ocorrencia, descricao, id_animal, id_medicamento) VALUES('${data_ocorrencia}', '${descricao}', ${id_animal}, ${id_medicamento}, ${morte})`);
+    await dbQuery(`INSERT INTO ${schema}ocorrencias(data_ocorrencia, descricao, id_animal, id_medicamento, morte) VALUES('${data_ocorrencia}', '${descricao}', ${id_animal}, ${id_medicamento}, ${morte})`);
     return `${MSGS.registroCriado}`;
 }
 
