@@ -19,7 +19,7 @@ module.exports.listMedicamentos = (req, res, next) => {
 module.exports.insertMedicamento = (req, res, next) => {
     const body = req.body;
     const schema = req.headers.schema ? req.headers.schema+'.': '';
-    insertMedicamento(body.medicamento, schema)
+    insertMedicamento(body.medicamento, body.principio_ativo, schema)
         .then(response => {
             res.status(201).json({
                 message: response
@@ -88,7 +88,7 @@ module.exports.updateMedicamento = (req, res, next) => {
     const body = req.body;
     const id = Number(req.params.id);
     const schema = req.headers.schema ? req.headers.schema+'.': '';
-    updateMedicamento(body.medicamento, id, schema)
+    updateMedicamento(body.medicamento, body.principio_ativo, id, schema)
         .then(response => {
             res.status(200).json({
                 message: response

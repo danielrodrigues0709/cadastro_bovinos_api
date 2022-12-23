@@ -6,8 +6,8 @@ module.exports.listMedicamentos = async (schema) => {
     return retorno;
 }
 
-module.exports.insertMedicamento = async (medicamento, schema) => {
-    await dbQuery(`INSERT INTO ${schema}medicamentos(medicamento) VALUES('${medicamento}')`);
+module.exports.insertMedicamento = async (medicamento, principio_ativo, schema) => {
+    await dbQuery(`INSERT INTO ${schema}medicamentos(medicamento, principio_ativo) VALUES('${medicamento}', '${principio_ativo}')`);
     return `${MSGS.registroCriado}`;
 }
 
@@ -16,7 +16,7 @@ module.exports.selectMedicamentoById = async (id, schema) => {
     return retorno;
 }
 
-module.exports.selectMedicamentoByDesc = async (medicamento, schema) => {
+module.exports.selectMedicamentoByDesc = async (medicamento, principio_ativo, schema) => {
     const retorno = await dbQuery(`SELECT * FROM ${schema}medicamentos WHERE medicamento ILIKE '%${medicamento}%'`);
     return retorno;
 }
@@ -26,7 +26,7 @@ module.exports.deleteMedicamento = async (id, schema) => {
     return `${MSGS.registroDeletado}`; 
 }
 
-module.exports.updateMedicamento = async (medicamento, id, schema) => {
-    await dbQuery(`UPDATE ${schema}medicamentos SET medicamento = '${medicamento}' WHERE id = ${id}`);
+module.exports.updateMedicamento = async (medicamento, principio_ativo, id, schema) => {
+    await dbQuery(`UPDATE ${schema}medicamentos SET medicamento = '${medicamento}', principio_ativo = '${principio_ativo}' WHERE id = ${id}`);
     return `${MSGS.registroAtualizado}`;
 }
