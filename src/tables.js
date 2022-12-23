@@ -21,7 +21,8 @@ module.exports.createMedicamentosTable = async (nome_schema) => {
         `CREATE TABLE IF NOT EXISTS ${schema}medicamentos 
         (
         id SERIAL PRIMARY KEY,
-        medicamento VARCHAR(50)
+        medicamento VARCHAR(50),
+        principio_ativo VARCHAR(500)
         )`
     );
     return `${MSGS.tabelaCriada} medicamentos`;
