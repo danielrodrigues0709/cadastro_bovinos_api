@@ -4,7 +4,7 @@ const { MSGS } = require("../../msgs");
 module.exports.listPartos = async (nro_controle_cria, nome_cria, id_cria, id_reprodutor, id_mae, sexo, schema) => {
     const retorno = await dbQuery(`SELECT * FROM ${schema}partos WHERE 
     ( ${nro_controle_cria} IS NULL OR nro_controle_cria = ${nro_controle_cria}) AND
-    ( '${nome_cria}' = '' OR '${nome_cria}' IS NULL OR nome_cria ILIKE '%${nome_cria}%') AND
+    ( '${nome_cria}' = '' OR '${nome_cria}' IS NULL OR '${nome_cria}' = 'undefined' OR nome_cria ILIKE '%${nome_cria}%') AND
     ( ${id_cria} IS NULL OR id_cria = ${id_cria}) AND
     ( ${id_reprodutor} IS NULL OR id_reprodutor = ${id_reprodutor}) AND
     ( ${id_mae} IS NULL OR id_mae = ${id_mae}) AND

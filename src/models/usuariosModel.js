@@ -2,7 +2,7 @@ const { dbQuery } = require("../../db");
 const { MSGS } = require("../../msgs");
 
 module.exports.listUsuarios = async () => {
-    const retorno = await dbQuery(`SELECT * FROM usuarios`, []); 
+    const retorno = await dbQuery(`SELECT * FROM usuarios`); 
     return retorno;
 }
 

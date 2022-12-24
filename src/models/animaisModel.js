@@ -3,7 +3,7 @@ const { MSGS } = require("../../msgs");
 
 module.exports.listAnimais = async (nome_animal, nro_controle, sexo, matriz, producao, rebanho, registrado, id_pai, id_mae, schema) => {
     const retorno = await dbQuery(`SELECT * FROM ${schema}animais WHERE 
-        ( '${nome_animal}' = '' OR '${nome_animal}' IS NULL OR nome_animal ILIKE '%${nome_animal}%') AND
+        ( '${nome_animal}' = '' OR '${nome_animal}' IS NULL OR '${nome_animal}' = 'undefined' OR nome_animal ILIKE '%${nome_animal}%') AND
         ( ${nro_controle} IS NULL OR nro_controle = ${nro_controle}) AND
         ( ${sexo} IS NULL OR sexo = ${sexo}) AND
         ( ${matriz} IS NULL OR matriz = ${matriz}) AND
