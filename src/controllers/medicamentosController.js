@@ -2,8 +2,9 @@ const { listMedicamentos, selectMedicamentoById, selectMedicamentoByDesc, insert
 const { MSGS } = require("../../msgs");
 
 module.exports.listMedicamentos = (req, res, next) => {
+    const medicamento = req.query.medicamento;
     const schema = req.headers.schema ? req.headers.schema+'.': '';
-    listMedicamentos(schema)
+    listMedicamentos(medicamento, schema)
         .then(medicamentos => {
             res.status(200).json(medicamentos);
             next();

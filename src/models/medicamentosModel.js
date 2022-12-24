@@ -1,8 +1,9 @@
 const { dbQuery } = require("../../db");
 const { MSGS } = require("../../msgs");
 
-module.exports.listMedicamentos = async (schema) => {
-    const retorno = await dbQuery(`SELECT * FROM ${schema}medicamentos`, []); 
+module.exports.listMedicamentos = async (medicamento, schema) => {
+    const retorno = await dbQuery(`SELECT * FROM ${schema}medicamentos WHERE 
+    ( '${medicamento}' = '' OR '${medicamento}' IS NULL OR '${medicamento}' = 'undefined' OR medicamento ILIKE '%${medicamento}%')`); 
     return retorno;
 }
 
@@ -16,7 +17,7 @@ module.exports.selectMedicamentoById = async (id, schema) => {
     return retorno;
 }
 
-module.exports.selectMedicamentoByDesc = async (medicamento, principio_ativo, schema) => {
+module.exports.selectMedicamentoByDesc = async (medicamento, schema) => {
     const retorno = await dbQuery(`SELECT * FROM ${schema}medicamentos WHERE medicamento ILIKE '%${medicamento}%'`);
     return retorno;
 }
