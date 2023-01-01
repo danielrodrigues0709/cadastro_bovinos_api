@@ -58,7 +58,8 @@ module.exports.insertAnimal = (req, res, next) => {
             insertAnimal(nome_animal, nro_controle, data_nascimento, sexo, matriz, producao, rebanho, registrado, id_reprodutor, id_mae, schema)
                 .then(response => {
                     res.status(201).json({
-                        message: response
+                        message: response.message,
+                        data: response.data,
                     });
                     next();
                 })

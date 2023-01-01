@@ -16,20 +16,23 @@ module.exports.listAnimais = async (nome_animal, nro_controle, sexo, matriz, pro
 }
 
 module.exports.insertAnimal = async (nome_animal, nro_controle, data_nascimento, sexo, matriz, producao, rebanho, registrado, id_reprodutor, id_mae, schema) => {
-    await dbQuery(`INSERT INTO ${schema}animais(nome_animal, nro_controle, data_nascimento, sexo, matriz, producao, rebanho, registrado, id_reprodutor, id_mae
-    ) VALUES(
-        '${nome_animal}',
-        ${nro_controle},
-        '${data_nascimento}',
-        ${sexo},
-        ${matriz},
-        ${producao},
-        ${rebanho},
-        ${registrado},
-        ${id_reprodutor},
-        ${id_mae}
-    )`);
-    return `${MSGS.registroCriado}`;
+    const retorno = {
+        data: await dbQuery(`INSERT INTO ${schema}animais(nome_animal, nro_controle, data_nascimento, sexo, matriz, producao, rebanho, registrado, id_reprodutor, id_mae
+        ) VALUES(
+            '${nome_animal}',
+            ${nro_controle},
+            '${data_nascimento}',
+            ${sexo},
+            ${matriz},
+            ${producao},
+            ${rebanho},
+            ${registrado},
+            ${id_reprodutor},
+            ${id_mae}
+        ) RETURNING *`),
+        message: `${MSGS.registroCriado}`
+    };
+    return retorno;
 }
 
 module.exports.selectAnimalById = async (id, schema) => {

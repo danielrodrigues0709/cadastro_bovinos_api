@@ -103,7 +103,7 @@ module.exports.createPartosTable = async (nome_schema) => {
         (
         id SERIAL PRIMARY KEY,
         data_parto DATE,
-        nro_controle_cria SMALLINT,
+        nro_controle_cria INTEGER,
         nome_cria VARCHAR(50),
         id_cria SMALLINT,
         id_reprodutor SMALLINT,
