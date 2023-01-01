@@ -1,7 +1,7 @@
 const { dbQuery } = require("../../db");
 const { MSGS } = require("../../msgs");
 
-module.exports.listAnimais = async (nome_animal, nro_controle, sexo, matriz, producao, rebanho, registrado, id_pai, id_mae, schema) => {
+module.exports.listAnimais = async (nome_animal, nro_controle, sexo, matriz, producao, rebanho, registrado, id_reprodutor, id_mae, schema) => {
     const retorno = await dbQuery(`SELECT * FROM ${schema}animais WHERE 
         ( '${nome_animal}' = '' OR '${nome_animal}' IS NULL OR '${nome_animal}' = 'undefined' OR nome_animal ILIKE '%${nome_animal}%') AND
         ( ${nro_controle} IS NULL OR nro_controle = ${nro_controle}) AND
@@ -10,13 +10,13 @@ module.exports.listAnimais = async (nome_animal, nro_controle, sexo, matriz, pro
         ( ${producao} IS NULL OR producao = ${producao}) AND
         ( ${rebanho} IS NULL OR rebanho = ${rebanho}) AND
         ( ${registrado} IS NULL OR registrado = ${registrado}) AND
-        ( ${id_pai} IS NULL OR id_pai = ${id_pai}) AND
+        ( ${id_reprodutor} IS NULL OR id_reprodutor = ${id_reprodutor}) AND
         ( ${id_mae} IS NULL OR id_mae = ${id_mae})`);
     return retorno;
 }
 
-module.exports.insertAnimal = async (nome_animal, nro_controle, data_nascimento, sexo, matriz, producao, rebanho, registrado, id_pai, id_mae, schema) => {
-    await dbQuery(`INSERT INTO ${schema}animais(nome_animal, nro_controle, data_nascimento, sexo, matriz, producao, rebanho, registrado, id_pai, id_mae
+module.exports.insertAnimal = async (nome_animal, nro_controle, data_nascimento, sexo, matriz, producao, rebanho, registrado, id_reprodutor, id_mae, schema) => {
+    await dbQuery(`INSERT INTO ${schema}animais(nome_animal, nro_controle, data_nascimento, sexo, matriz, producao, rebanho, registrado, id_reprodutor, id_mae
     ) VALUES(
         '${nome_animal}',
         ${nro_controle},
@@ -26,7 +26,7 @@ module.exports.insertAnimal = async (nome_animal, nro_controle, data_nascimento,
         ${producao},
         ${rebanho},
         ${registrado},
-        ${id_pai},
+        ${id_reprodutor},
         ${id_mae}
     )`);
     return `${MSGS.registroCriado}`;
@@ -49,7 +49,7 @@ module.exports.selectAnimalNumControle = async (nro_controle, schema) => {
 
 module.exports.selectFather = async (id, schema) => {
     const retorno = await dbQuery(`SELECT p.* FROM ${schema}animais f
-    JOIN ${schema}animais p ON f.id_pai = p.id
+    JOIN ${schema}animais p ON f.id_reprodutor = p.id
     WHERE f.id = ${id}`);
     return retorno;
 }
@@ -71,7 +71,7 @@ module.exports.deleteAnimal = async (id, schema) => {
     return `${MSGS.registroDeletado}`; 
 }
 
-module.exports.updateAnimal = async (id, nome_animal, nro_controle, data_nascimento, sexo, matriz, producao, rebanho, registrado, id_pai, id_mae, schema) => {
+module.exports.updateAnimal = async (id, nome_animal, nro_controle, data_nascimento, sexo, matriz, producao, rebanho, registrado, id_reprodutor, id_mae, schema) => {
     await dbQuery(`UPDATE ${schema}animais SET 
         nome_animal = '${nome_animal}',
         nro_controle = ${nro_controle},
@@ -81,7 +81,7 @@ module.exports.updateAnimal = async (id, nome_animal, nro_controle, data_nascime
         producao = ${producao},
         rebanho = ${rebanho},
         registrado = ${registrado},
-        id_pai = ${id_pai},
+        id_reprodutor = ${id_reprodutor},
         id_mae = ${id_mae}
         WHERE id = ${id}`);
     return `${MSGS.registroAtualizado}`;

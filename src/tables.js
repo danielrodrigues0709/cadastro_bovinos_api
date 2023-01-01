@@ -56,10 +56,10 @@ module.exports.createAnimaisTable = async (nome_schema) => {
         producao SMALLINT,
         rebanho SMALLINT,
         registrado SMALLINT,
-        id_pai SMALLINT,
+        id_reprodutor SMALLINT,
         id_mae SMALLINT,
         CONSTRAINT fk_pai
-            FOREIGN KEY(id_pai) 
+            FOREIGN KEY(id_reprodutor) 
             REFERENCES ${schema}animais(id)
             ON DELETE SET NULL,
         CONSTRAINT fk_mae

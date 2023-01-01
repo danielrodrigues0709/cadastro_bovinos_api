@@ -9,7 +9,7 @@ module.exports.listAnimais = (req, res, next) => {
     const producao = req.query.producao;
     const rebanho = req.query.rebanho;
     const registrado = req.query.registrado;
-    const id_pai = req.query.id_pai;
+    const id_reprodutor = req.query.id_reprodutor;
     const id_mae = req.query.id_mae;
     const schema = req.headers.schema ? req.headers.schema+'.': '';
     
@@ -21,7 +21,7 @@ module.exports.listAnimais = (req, res, next) => {
         producao ? producao : null,
         rebanho ? rebanho : null,
         registrado ? registrado : null,
-        id_pai ? id_pai : null,
+        id_reprodutor ? id_reprodutor : null,
         id_mae ? id_mae : null,
         schema)
         .then(animais => {
@@ -45,7 +45,7 @@ module.exports.insertAnimal = (req, res, next) => {
     const producao = req.body.producao;
     const rebanho = req.body.rebanho;
     const registrado = req.body.registrado;
-    const id_pai = req.body.id_pai;
+    const id_reprodutor = req.body.id_reprodutor;
     const id_mae = req.body.id_mae;
     const schema = req.headers.schema ? req.headers.schema+'.': '';
     selectAnimalNumControle(nro_controle, schema).then(response => {
@@ -55,7 +55,7 @@ module.exports.insertAnimal = (req, res, next) => {
             });
         }
         else {
-            insertAnimal(nome_animal, nro_controle, data_nascimento, sexo, matriz, producao, rebanho, registrado, id_pai, id_mae, schema)
+            insertAnimal(nome_animal, nro_controle, data_nascimento, sexo, matriz, producao, rebanho, registrado, id_reprodutor, id_mae, schema)
                 .then(response => {
                     res.status(201).json({
                         message: response
@@ -164,10 +164,10 @@ module.exports.updateAnimal = (req, res, next) => {
     const producao = req.body.producao;
     const rebanho = req.body.rebanho;
     const registrado = req.body.registrado;
-    const id_pai = req.body.id_pai;
+    const id_reprodutor = req.body.id_reprodutor;
     const id_mae = req.body.id_mae;
     const schema = req.headers.schema ? req.headers.schema+'.': '';
-    updateAnimal(id, nome_animal, nro_controle, data_nascimento, sexo, matriz, producao, rebanho, registrado, id_pai, id_mae, schema)
+    updateAnimal(id, nome_animal, nro_controle, data_nascimento, sexo, matriz, producao, rebanho, registrado, id_reprodutor, id_mae, schema)
         .then(response => {
             res.status(200).json({
                 message: response
