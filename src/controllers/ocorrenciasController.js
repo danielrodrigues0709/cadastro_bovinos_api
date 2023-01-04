@@ -25,7 +25,8 @@ module.exports.insertOcorrencia = (req, res, next) => {
     insertOcorrencia(body.data_ocorrencia, body.descricao, body.id_animal, body.id_medicamento, body.morte, schema)
         .then(response => {
             res.status(201).json({
-                message: response
+                message: response.message,
+                data: response.data,
             });
             next();
         })
@@ -78,7 +79,8 @@ module.exports.updateOcorrencia = (req, res, next) => {
     updateOcorrencia(body.data_ocorrencia, body.descricao, body.id_animal, body.id_medicamento, body.morte,id, schema)
         .then(response => {
             res.status(200).json({
-                message: response
+                message: response.message,
+                data: response.data,
             });
             next();
         })

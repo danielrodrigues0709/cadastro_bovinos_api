@@ -23,7 +23,8 @@ module.exports.insertMedicamento = (req, res, next) => {
     insertMedicamento(body.medicamento, body.principio_ativo, schema)
         .then(response => {
             res.status(201).json({
-                message: response
+                message: response.message,
+                data: response.data,
             });
             next();
         })
@@ -92,7 +93,8 @@ module.exports.updateMedicamento = (req, res, next) => {
     updateMedicamento(body.medicamento, body.principio_ativo, id, schema)
         .then(response => {
             res.status(200).json({
-                message: response
+                message: response.message,
+                data: response.data,
             });
             next();
         })

@@ -9,8 +9,11 @@ module.exports.listInseminacoes = async (id_animal, id_reprodutor, schema) => {
 }
 
 module.exports.insertInseminacao = async (data_inseminacao, data_previsao_parto, id_animal, id_reprodutor, schema) => {
-    await dbQuery(`INSERT INTO ${schema}inseminacoes(data_inseminacao, data_previsao_parto, id_animal, id_reprodutor) VALUES('${data_inseminacao}', '${data_previsao_parto}',${id_animal}, ${id_reprodutor})`);
-    return `${MSGS.registroCriado}`;
+    const retorno = {
+        data: await dbQuery(`INSERT INTO ${schema}inseminacoes(data_inseminacao, data_previsao_parto, id_animal, id_reprodutor) VALUES('${data_inseminacao}', '${data_previsao_parto}',${id_animal}, ${id_reprodutor}) RETURNING *`),
+        message: `${MSGS.registroCriado}`
+    };
+    return retorno;
 }
 
 module.exports.selectInseminacaoById = async (id, schema) => {
@@ -24,6 +27,9 @@ module.exports.deleteInseminacao = async (id, schema) => {
 }
 
 module.exports.updateInseminacao = async (data_inseminacao, data_previsao_parto, id_animal, id_reprodutor, id, schema) => {
-    await dbQuery(`UPDATE ${schema}inseminacoes SET data_inseminacao = '${data_inseminacao}', data_previsao_parto = '${data_previsao_parto}', id_animal = ${id_animal}, id_reprodutor = ${id_reprodutor} WHERE id = ${id}`);
-    return `${MSGS.registroAtualizado}`;
+    const retorno = {
+        data: await dbQuery(`UPDATE ${schema}inseminacoes SET data_inseminacao = '${data_inseminacao}', data_previsao_parto = '${data_previsao_parto}', id_animal = ${id_animal}, id_reprodutor = ${id_reprodutor} WHERE id = ${id} RETURNING *`),
+        message: `${MSGS.registroAtualizado}`
+    };
+    return retorno;
 }

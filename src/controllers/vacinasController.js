@@ -24,7 +24,8 @@ module.exports.insertVacina = (req, res, next) => {
     insertVacina(body.vacina_vermifugo, body.doses, body.tipo, schema)
         .then(response => {
             res.status(201).json({
-                message: response
+                message: response.message,
+                data: response.data,
             });
             next();
         })
@@ -93,7 +94,8 @@ module.exports.updateVacina = (req, res, next) => {
     updateVacina(body.vacina_vermifugo, body.doses, body.tipo, id, schema)
         .then(response => {
             res.status(200).json({
-                message: response
+                message: response.message,
+                data: response.data,
             });
             next();
         })

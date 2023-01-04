@@ -8,8 +8,11 @@ module.exports.listMedicamentos = async (medicamento, schema) => {
 }
 
 module.exports.insertMedicamento = async (medicamento, principio_ativo, schema) => {
-    await dbQuery(`INSERT INTO ${schema}medicamentos(medicamento, principio_ativo) VALUES('${medicamento}', '${principio_ativo}')`);
-    return `${MSGS.registroCriado}`;
+    const retorno = {
+        data: await dbQuery(`INSERT INTO ${schema}medicamentos(medicamento, principio_ativo) VALUES('${medicamento}', '${principio_ativo}') RETURNING *`),
+        message: `${MSGS.registroCriado}`
+    };
+    return retorno;
 }
 
 module.exports.selectMedicamentoById = async (id, schema) => {
@@ -28,6 +31,9 @@ module.exports.deleteMedicamento = async (id, schema) => {
 }
 
 module.exports.updateMedicamento = async (medicamento, principio_ativo, id, schema) => {
-    await dbQuery(`UPDATE ${schema}medicamentos SET medicamento = '${medicamento}', principio_ativo = '${principio_ativo}' WHERE id = ${id}`);
-    return `${MSGS.registroAtualizado}`;
+    const retorno = {
+        data: await dbQuery(`UPDATE ${schema}medicamentos SET medicamento = '${medicamento}', principio_ativo = '${principio_ativo}' WHERE id = ${id} RETURNING *`),
+        message: `${MSGS.registroAtualizado}`
+    };
+    return retorno;
 }

@@ -13,8 +13,11 @@ module.exports.listPartos = async (nro_controle_cria, nome_cria, id_cria, id_rep
 }
 
 module.exports.insertParto = async (data_parto, nro_controle_cria, nome_cria, id_cria, id_reprodutor, id_mae, sexo, schema) => {
-    await dbQuery(`INSERT INTO ${schema}partos(data_parto, nro_controle_cria, nome_cria, id_cria, id_reprodutor, id_mae, sexo) VALUES('${data_parto}', ${nro_controle_cria}, '${nome_cria}', ${id_cria}, ${id_reprodutor}, ${id_mae}, ${sexo})`);
-    return `${MSGS.registroCriado}`;
+    const retorno = {
+        data: await dbQuery(`INSERT INTO ${schema}partos(data_parto, nro_controle_cria, nome_cria, id_cria, id_reprodutor, id_mae, sexo) VALUES('${data_parto}', ${nro_controle_cria}, '${nome_cria}', ${id_cria}, ${id_reprodutor}, ${id_mae}, ${sexo}) RETURNING *`),
+        message: `${MSGS.registroCriado}`
+    };
+    return retorno;
 }
 
 module.exports.selectPartoById = async (id, schema) => {
@@ -28,6 +31,9 @@ module.exports.deleteParto = async (id, schema) => {
 }
 
 module.exports.updateParto = async (data_parto, nro_controle_cria, nome_cria, id_cria, id_reprodutor, id_mae, sexo, id, schema) => {
-    await dbQuery(`UPDATE ${schema}partos SET data_parto = '${data_parto}', nro_controle_cria = ${nro_controle_cria}, nome_cria = '${nome_cria}', id_cria = ${id_cria}, id_reprodutor = ${id_reprodutor}, id_mae = ${id_mae}, sexo = ${sexo} WHERE id = ${id}`);
-    return `${MSGS.registroAtualizado}`;
+    const retorno = {
+        data: await dbQuery(`UPDATE ${schema}partos SET data_parto = '${data_parto}', nro_controle_cria = ${nro_controle_cria}, nome_cria = '${nome_cria}', id_cria = ${id_cria}, id_reprodutor = ${id_reprodutor}, id_mae = ${id_mae}, sexo = ${sexo} WHERE id = ${id} RETURNING *`),
+        message: `${MSGS.registroAtualizado}`
+    };
+    return retorno;
 }

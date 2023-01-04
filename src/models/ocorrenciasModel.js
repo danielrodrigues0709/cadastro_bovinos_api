@@ -10,8 +10,11 @@ module.exports.listOcorrencias = async (id_animal, id_medicamento, morte, schema
 }
 
 module.exports.insertOcorrencia = async (data_ocorrencia, descricao, id_animal, id_medicamento, morte, schema) => {
-    await dbQuery(`INSERT INTO ${schema}ocorrencias(data_ocorrencia, descricao, id_animal, id_medicamento, morte) VALUES('${data_ocorrencia}', '${descricao}', ${id_animal}, ${id_medicamento}, ${morte})`);
-    return `${MSGS.registroCriado}`;
+    const retorno = {
+        data: await dbQuery(`INSERT INTO ${schema}ocorrencias(data_ocorrencia, descricao, id_animal, id_medicamento, morte) VALUES('${data_ocorrencia}', '${descricao}', ${id_animal}, ${id_medicamento}, ${morte}) RETURNING *`),
+        message: `${MSGS.registroCriado}`
+    };
+    return retorno;
 }
 
 module.exports.selectOcorrenciaById = async (id, schema) => {
@@ -25,6 +28,9 @@ module.exports.deleteOcorrencia = async (id, schema) => {
 }
 
 module.exports.updateOcorrencia = async (data_ocorrencia, descricao, id_animal, id_medicamento, morte, id, schema) => {
-    await dbQuery(`UPDATE ${schema}ocorrencias SET data_ocorrencia = '${data_ocorrencia}', descricao = '${descricao}', id_animal = ${id_animal}, id_medicamento = ${id_medicamento}, morte = ${morte} WHERE id = ${id}`);
-    return `${MSGS.registroAtualizado}`;
+    const retorno = {
+        data: await dbQuery(`UPDATE ${schema}ocorrencias SET data_ocorrencia = '${data_ocorrencia}', descricao = '${descricao}', id_animal = ${id_animal}, id_medicamento = ${id_medicamento}, morte = ${morte} WHERE id = ${id} RETURNING *`),
+        message: `${MSGS.registroAtualizado}`
+    };
+    return retorno;
 }
