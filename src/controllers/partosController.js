@@ -36,7 +36,8 @@ module.exports.insertParto = (req, res, next) => {
     insertParto(body.data_parto, body.nro_controle_cria, body.nome_cria, body.id_cria, body.id_reprodutor, body.id_mae, body.sexo, schema)
         .then(response => {
             res.status(201).json({
-                message: response
+                message: response.message,
+                data: response.data,
             });
             next();
         })
@@ -89,7 +90,8 @@ module.exports.updateParto = (req, res, next) => {
     updateParto(body.data_parto, body.nro_controle_cria, body.nome_cria, body.id_cria, body.id_reprodutor, body.id_mae, body.sexo, id, schema)
         .then(response => {
             res.status(200).json({
-                message: response
+                message: response.message,
+                data: response.data,
             });
             next();
         })

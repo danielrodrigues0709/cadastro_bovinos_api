@@ -7,8 +7,11 @@ module.exports.listUsuarios = async () => {
 }
 
 module.exports.insertUsuario = async (usuario, email, senha) => {
-    await dbQuery(`INSERT INTO usuarios(usuario, email, senha) VALUES('${usuario}', '${email}', '${senha}')`);
-    return `${MSGS.registroCriado}`;
+    const retorno = {
+        data: await dbQuery(`INSERT INTO usuarios(usuario, email, senha) VALUES('${usuario}', '${email}', '${senha}') RETURNING *`),
+        message: `${MSGS.registroCriado}`
+    };
+    return retorno;
 }
 
 module.exports.selectUsuarioById = async (id) => {
@@ -27,6 +30,9 @@ module.exports.deleteUsuario = async (id) => {
 }
 
 module.exports.updateUsuario = async (usuario, email, senha,  id) => {
-    await dbQuery(`UPDATE usuarios SET usuario = '${usuario}', email = '${email}', senha = '${senha}' WHERE id = ${id}`);
-    return `${MSGS.registroAtualizado}`;
+    const retorno = {
+        data: await dbQuery(`UPDATE usuarios SET usuario = '${usuario}', email = '${email}', senha = '${senha}' WHERE id = ${id} RETURNING *`),
+        message: `${MSGS.registroAtualizado}`
+    };
+    return retorno;
 }

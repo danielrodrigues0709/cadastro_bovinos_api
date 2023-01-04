@@ -24,7 +24,8 @@ module.exports.insertInseminacao = (req, res, next) => {
     insertInseminacao(body.data_inseminacao, body.data_previsao_parto, body.id_animal, body.id_reprodutor, schema)
         .then(response => {
             res.status(201).json({
-                message: response
+                message: response.message,
+                data: response.data,
             });
             next();
         })
@@ -77,7 +78,8 @@ module.exports.updateInseminacao = (req, res, next) => {
     updateInseminacao(body.data_inseminacao, body.data_previsao_parto, body.id_animal, body.id_reprodutor, id, schema)
         .then(response => {
             res.status(200).json({
-                message: response
+                message: response.message,
+                data: response.data,
             });
             next();
         })

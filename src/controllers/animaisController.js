@@ -171,7 +171,8 @@ module.exports.updateAnimal = (req, res, next) => {
     updateAnimal(id, nome_animal, nro_controle, data_nascimento, sexo, matriz, producao, rebanho, registrado, id_reprodutor, id_mae, schema)
         .then(response => {
             res.status(200).json({
-                message: response
+                message: response.message,
+                data: response.data,
             });
             next();
         })

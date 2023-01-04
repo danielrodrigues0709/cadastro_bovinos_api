@@ -40,7 +40,8 @@ module.exports.insertUsuario = (req, res, next) => {
                     insertUsuario(body.usuario, body.email, hash)
                         .then(async response => {
                             res.status(201).json({
-                                message: response
+                                message: response.message,
+                                data: response.data,
                             });
                             await next();
                         })
@@ -217,7 +218,8 @@ module.exports.updateUsuario = (req, res, next) => {
             updateUsuario(body.usuario, body.email, hash, id)
                 .then(response => {
                     res.status(200).json({
-                        message: response
+                        message: response.message,
+                        data: response.data,
                     });
                     next();
                 })

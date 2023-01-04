@@ -10,8 +10,11 @@ module.exports.listVacinacoes = async (id_animal, id_vacina, tipo, schema) => {
 }
 
 module.exports.insertVacinacao = async (data_vacinacao, id_animal, id_vacina, dose, tipo, schema) => {
-    await dbQuery(`INSERT INTO ${schema}vacinacoes(data_vacinacao, id_animal, id_vacina, dose, tipo) VALUES('${data_vacinacao}', ${id_animal}, ${id_vacina}, ${dose}, ${tipo})`);
-    return `${MSGS.registroCriado}`;
+    const retorno = {
+        data: await dbQuery(`INSERT INTO ${schema}vacinacoes(data_vacinacao, id_animal, id_vacina, dose, tipo) VALUES('${data_vacinacao}', ${id_animal}, ${id_vacina}, ${dose}, ${tipo}) RETURNING *`),
+        message: `${MSGS.registroCriado}`
+    };
+    return retorno;
 }
 
 module.exports.selectVacinacaoById = async (id, schema) => {
@@ -25,6 +28,9 @@ module.exports.deleteVacinacao = async (id, schema) => {
 }
 
 module.exports.updateVacinacao = async (data_vacinacao, id_animal, id_vacina, dose, tipo, id, schema) => {
-    await dbQuery(`UPDATE ${schema}vacinacoes SET data_vacinacao = '${data_vacinacao}', id_animal = ${id_animal}, id_vacina = ${id_vacina}, dose = ${dose}, tipo = ${tipo} WHERE id = ${id}`);
-    return `${MSGS.registroAtualizado}`;
+    const retorno = {
+        data: await dbQuery(`UPDATE ${schema}vacinacoes SET data_vacinacao = '${data_vacinacao}', id_animal = ${id_animal}, id_vacina = ${id_vacina}, dose = ${dose}, tipo = ${tipo} WHERE id = ${id} RETURNING *`),
+        message: `${MSGS.registroAtualizado}`
+    };
+    return retorno;
 }

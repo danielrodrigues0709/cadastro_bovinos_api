@@ -75,7 +75,8 @@ module.exports.deleteAnimal = async (id, schema) => {
 }
 
 module.exports.updateAnimal = async (id, nome_animal, nro_controle, data_nascimento, sexo, matriz, producao, rebanho, registrado, id_reprodutor, id_mae, schema) => {
-    await dbQuery(`UPDATE ${schema}animais SET 
+    const retorno = {
+        data: await dbQuery(`UPDATE ${schema}animais SET 
         nome_animal = '${nome_animal}',
         nro_controle = ${nro_controle},
         data_nascimento = '${data_nascimento}',
@@ -86,6 +87,9 @@ module.exports.updateAnimal = async (id, nome_animal, nro_controle, data_nascime
         registrado = ${registrado},
         id_reprodutor = ${id_reprodutor},
         id_mae = ${id_mae}
-        WHERE id = ${id}`);
-    return `${MSGS.registroAtualizado}`;
+        WHERE id = ${id}
+        RETURNING *`),
+        message: `${MSGS.registroAtualizado}`
+    };
+    return retorno;
 }
