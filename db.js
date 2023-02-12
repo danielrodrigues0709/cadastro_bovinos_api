@@ -3,10 +3,10 @@ const { MSGS } = require('./msgs');
 
 module.exports.openConnection = () => {
     const db = new Pool({
-        user: 'vwbhlvsayanmrd',
-        host: 'ec2-34-230-198-12.compute-1.amazonaws.com',
-        database: 'd31ta7mj7p5ikh',
-        password: '27de96173cf0808dda8661bd6ce7f0eb7693f8de7e075ab12bf407d69daeaf5d',
+        user: 'mbkusniilqqstr',
+        host: 'ec2-44-205-177-160.compute-1.amazonaws.com',
+        database: 'd4d5en3f6b1vhd',
+        password: 'fcc82a460b5ec285443120307c6217d5561fc108bdcf2c2fcaee0bbff20c2030',
         port: 5432,
         ssl: true
     });
@@ -16,6 +16,8 @@ module.exports.openConnection = () => {
 
 module.exports.dbQuery = (query, params) => {
     let db = this.openConnection();
+
+    console.log(query)
 
     return new Promise((resolve, reject) => {
         db.query(query, params, (err, rows) => {
