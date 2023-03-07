@@ -174,10 +174,20 @@ module.exports.selectUsuarioById = (req, res, next) => {
 
 module.exports.selectUsuarioByUsername = (req, res, next) => {
     const usuario = req.params.usuario;
+    const senha = req.params.senha;
     selectUsuarioByUsername(usuario)
         .then(usuario => {
-            res.status(200).json(usuario);
-            next();
+            let match = bcrypt.compareSync(senha, usuario.rows[0].senha);
+            if(!match) {
+                res.status(401).json({
+                    message: MSGS.loginInvalido
+                });
+                next();
+            }
+            else if(match) {
+                res.status(200).json(usuario);
+                next();
+            }
         })
         .catch(err => {
             res.status(422).json({
