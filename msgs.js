@@ -23,4 +23,5 @@ module.exports.MSGS = {
     erroHash: 'Erro ao criptografar senha',
     usuarioJaExistente: 'Este nome de usuário já está em uso',
     registroExistente: 'Este número de registro já está em uso',
+    loginInvalido: 'Login inválido'
 }
