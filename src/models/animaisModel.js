@@ -50,6 +50,11 @@ module.exports.selectAnimalNumControle = async (nro_controle, schema) => {
     return retorno;
 }
 
+module.exports.selectAnimalNumMatriz = async (matriz, schema) => {
+    const retorno = await dbQuery(`SELECT * FROM ${schema}animais WHERE matriz = ${matriz}`);
+    return retorno;
+}
+
 module.exports.selectFather = async (id, schema) => {
     const retorno = await dbQuery(`SELECT p.* FROM ${schema}animais f
     JOIN ${schema}animais p ON f.id_reprodutor = p.id

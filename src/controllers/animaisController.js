@@ -1,4 +1,4 @@
-const { listAnimais, selectAnimalById, insertAnimal, deleteAnimal, updateAnimal, selectFather, selectMother, selectAnimalNumControle, selectAnimalByDesc } = require("../models/animaisModel");
+const { listAnimais, selectAnimalById, insertAnimal, deleteAnimal, updateAnimal, selectFather, selectMother, selectAnimalNumControle, selectAnimalByDesc, selectAnimalNumMatriz } = require("../models/animaisModel");
 const { MSGS } = require("../../msgs");
 
 module.exports.listAnimais = (req, res, next) => {
@@ -51,24 +51,33 @@ module.exports.insertAnimal = (req, res, next) => {
     selectAnimalNumControle(nro_controle, schema).then(response => {
         if(response.rowCount > 0) {
             return res.status(422).json({
-                message: MSGS.registroExistente
+                message: MSGS.numControleExistente
             });
         }
         else {
-            insertAnimal(nome_animal, nro_controle, data_nascimento, sexo, matriz, producao, rebanho, registrado, id_reprodutor, id_mae, schema)
-                .then(response => {
-                    res.status(201).json({
-                        message: response.message,
-                        data: response.data,
+            selectAnimalNumMatriz(matriz, schema).then(response => {
+                if(response.rowCount > 0) {
+                    return res.status(422).json({
+                        message: MSGS.numMatrizExistente
                     });
-                    next();
+                }
+                else {
+                    insertAnimal(nome_animal, nro_controle, data_nascimento, sexo, matriz, producao, rebanho, registrado, id_reprodutor, id_mae, schema)
+                        .then(response => {
+                            res.status(201).json({
+                                message: response.message,
+                                data: response.data,
+                            });
+                            next();
+                        })
+                        .catch(err => {
+                            res.status(422).json({
+                                message: MSGS.erroRequisicao
+                            });
+                            console.log(err)
+                        });
+                    }
                 })
-                .catch(err => {
-                    res.status(422).json({
-                        message: MSGS.erroRequisicao
-                    });
-                    console.log(err)
-                });
         }
     });
 }
