@@ -6,9 +6,9 @@ module.exports.listUsuarios = async () => {
     return retorno;
 }
 
-module.exports.insertUsuario = async (usuario, email, senha) => {
+module.exports.insertUsuario = async (nome_usuario, username, telefone, email, senha) => {
     const retorno = {
-        data: await dbQuery(`INSERT INTO usuarios(usuario, email, senha) VALUES('${usuario}', '${email}', '${senha}') RETURNING *`),
+        data: await dbQuery(`INSERT INTO usuarios(nome_usuario, username, telefone, email, senha) VALUES('${nome_usuario}', '${username}', '${telefone}', '${email}', '${senha}') RETURNING *`),
         message: `${MSGS.registroCriado}`
     };
     return retorno;
@@ -19,8 +19,18 @@ module.exports.selectUsuarioById = async (id) => {
     return retorno;
 }
 
-module.exports.selectUsuarioByUsername = async (usuario) => {
-    const retorno = await dbQuery(`SELECT * FROM usuarios WHERE usuario = '${usuario}'`);
+module.exports.logIn = async (username) => {
+    const retorno = await dbQuery(`SELECT * FROM usuarios WHERE username = '${username}' OR email = '${username}'`);
+    return retorno;
+}
+
+module.exports.selectUsuarioByUsername = async (username) => {
+    const retorno = await dbQuery(`SELECT * FROM usuarios WHERE username = '${username}'`);
+    return retorno;
+}
+
+module.exports.selectUsuarioByEmail = async (email) => {
+    const retorno = await dbQuery(`SELECT * FROM usuarios WHERE email = '${email}'`);
     return retorno;
 }
 
@@ -29,9 +39,9 @@ module.exports.deleteUsuario = async (id) => {
     return `${MSGS.registroDeletado}`; 
 }
 
-module.exports.updateUsuario = async (usuario, email, senha,  id) => {
+module.exports.updateUsuario = async (nome_usuario, username, telefone, email, senha,  id) => {
     const retorno = {
-        data: await dbQuery(`UPDATE usuarios SET usuario = '${usuario}', email = '${email}', senha = '${senha}' WHERE id = ${id} RETURNING *`),
+        data: await dbQuery(`UPDATE usuarios SET nome_usuario = '${nome_usuario}', username = '${username}', telefone = '${telefone}', email = '${email}', senha = '${senha}' WHERE id = ${id} RETURNING *`),
         message: `${MSGS.registroAtualizado}`
     };
     return retorno;

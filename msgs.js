@@ -22,6 +22,8 @@ module.exports.MSGS = {
     //registroNaoEncontrado: 'Registro não encontrado',
     erroHash: 'Erro ao criptografar senha',
     usuarioJaExistente: 'Este nome de usuário já está em uso',
-    registroExistente: 'Este número de registro já está em uso',
+    emailJaExistente: 'Já existe uma conta para este e-mail',
+    numControleExistente: 'Este número de controle já está em uso',
+    numMatrizExistente: 'Este número de matriz já está em uso',
     loginInvalido: 'Login inválido'
 }

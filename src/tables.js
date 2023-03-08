@@ -6,8 +6,10 @@ module.exports.createUsuariosTable = async () => {
         `CREATE TABLE IF NOT EXISTS usuarios 
         (
         id SERIAL PRIMARY KEY,
-        usuario VARCHAR(50) UNIQUE,
+        nome_usuario VARCHAR(50),
+        username VARCHAR(50) UNIQUE NOT NULL,
         email VARCHAR(100),
+        telefone VARCHAR(20),
         senha VARCHAR(100)
         )`
     );
