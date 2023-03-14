@@ -1,9 +1,11 @@
 const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
 
 const { listUsuarios, insertUsuario, deleteUsuario, updateUsuario, selectUsuarioById, selectUsuarioByUsername, selectUsuarioByEmail, logIn } = require("../models/usuariosModel");
 const { MSGS } = require("../../msgs");
 const { createSchemaSql } = require("../schemas");
 const { createMedicamentosTable, createVacinasTable, createAnimaisTable, createInseminacoesTable, createVacinacoesTable, createPartosTable, createOcorrenciasTable } = require("../tables");
+const { CONSTANTS } = require("../../utils");
 
 module.exports.listUsuarios = (req, res, next) => {
     listUsuarios()
@@ -199,7 +201,14 @@ module.exports.logIn = (req, res, next) => {
                     next();
                 }
                 else if(match) {
-                    res.status(200).json(usuario);
+                    let token = jwt.sign({
+                        usuario: usuario.rows[0]
+                    },
+                    CONSTANTS.JWT_KEY,
+                    {
+                        expiresIn: '12h'
+                    });
+                    res.status(200).json(token);
                     next();
                 }
             };
