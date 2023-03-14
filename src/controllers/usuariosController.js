@@ -183,8 +183,8 @@ module.exports.selectUsuarioById = (req, res, next) => {
 }
 
 module.exports.logIn = (req, res, next) => {
-    const username = req.params.username;
-    const senha = req.params.senha;
+    const username = req.body.username;
+    const senha = req.body.senha;
     logIn(username)
         .then(usuario => {
             if(usuario.rows.length == 0) {
