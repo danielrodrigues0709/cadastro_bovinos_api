@@ -25,5 +25,6 @@ module.exports.MSGS = {
     emailJaExistente: 'Já existe uma conta para este e-mail',
     numControleExistente: 'Este número de controle já está em uso',
     numMatrizExistente: 'Este número de matriz já está em uso',
-    loginInvalido: 'Login inválido'
+    loginInvalido: 'Login inválido',
+    falhaAutenticacao: 'Falha na autenticação'
 }

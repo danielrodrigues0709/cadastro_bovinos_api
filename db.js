@@ -17,7 +17,7 @@ module.exports.openConnection = () => {
 module.exports.dbQuery = (query, params) => {
     let db = this.openConnection();
 
-    console.log(query)
+    // console.log(query)
 
     return new Promise((resolve, reject) => {
         db.query(query, params, (err, rows) => {
