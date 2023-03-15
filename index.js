@@ -34,4 +34,9 @@ app.use('/vacinacoes', vacinacoesRouter);
 app.use('/inseminacoes', inseminacoesRouter);
 app.use('/partos', partosRouter);
 
+// Páginas
+app.get("/recover-password", (req, res) => {
+    res.sendFile(`${__dirname}/src/pages/recover-password/recover-password.html`);
+})
+
 module.exports = app;
