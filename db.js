@@ -3,10 +3,20 @@ const { MSGS } = require('./msgs');
 
 module.exports.openConnection = () => {
     const db = new Pool({
+        // Heroku
+        /*
         user: 'mbkusniilqqstr',
         host: 'ec2-44-205-177-160.compute-1.amazonaws.com',
         database: 'd4d5en3f6b1vhd',
         password: 'fcc82a460b5ec285443120307c6217d5561fc108bdcf2c2fcaee0bbff20c2030',
+        port: 5432,
+        ssl: true
+        */
+        // ElephantSQL
+        user: 'tpbmqugu',
+        host: 'babar.db.elephantsql.com',
+        database: 'tpbmqugu',
+        password: 'ybEdt1AFQujddVPyA_y1ZsiMmoZzNinR',
         port: 5432,
         ssl: true
     });
